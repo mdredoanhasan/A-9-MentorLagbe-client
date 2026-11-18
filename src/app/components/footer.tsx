@@ -109,7 +109,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-gray-200 py-5 text-center text-sm text-slate-500">
-        © {new Date().getFullYear()} MentorLagbe. All rights reserved.
+        © 2026 MentorLagbe. All rights reserved.
       </div>
     </footer>
   );
