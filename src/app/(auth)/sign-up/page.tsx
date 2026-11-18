@@ -37,7 +37,7 @@ export default function SignUpPage() {
         name: form.name,
         email: form.email,
         password: form.password,
-        role: form.role,
+        ...{ role: form.role },
       });
 
       if (error) {
@@ -47,6 +47,7 @@ export default function SignUpPage() {
 
       console.log(data);
       router.push("/");
+      router.refresh();
     } catch {
       setError("Network error. Please try again.");
     } finally {

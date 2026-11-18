@@ -1,22 +1,51 @@
 "use client";
 
+import { authClient } from "@/app/lib/auth-client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 export default function SignInPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const router = useRouter();
 
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    // TODO: call your auth API here
-    console.log({ email, password });
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  function update(field: string, value: string) {
+    setForm((prev) => ({ ...prev, [field]: value }));
   }
 
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      const { data, error } = await authClient.signIn.email({
+        email: form.email,
+        password: form.password,
+      });
+
+      if (error) {
+        setError(error.message ?? "Invalid email or password.");
+        return;
+      }
+
+      console.log(data);
+      router.push("/");
+      router.refresh(); // refresh server components so they see the new session
+    } catch {
+      setError("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#faf8f4] ">
+    <main className="flex min-h-screen items-center justify-center bg-[#faf8f4] px-4">
       <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-        <h1 className="font-[family-name:var(--font-fraunces)] text-3xl font-bold text-[#101535]">
+        <h1 className="font-(family-name:--font-fraunces) text-3xl font-bold text-[#101535]">
           Welcome back
         </h1>
         <p className="mt-1 text-slate-500">
@@ -33,10 +62,12 @@ export default function SignInPage() {
             </label>
             <input
               id="email"
+              name="email"
               type="email"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="email"
+              value={form.email}
+              onChange={(e) => update("email", e.target.value)}
               placeholder="you@example.com"
               className="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#1e2a78] text-black"
             />
@@ -51,20 +82,29 @@ export default function SignInPage() {
             </label>
             <input
               id="password"
+              name="password"
               type="password"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
+              value={form.password}
+              onChange={(e) => update("password", e.target.value)}
               placeholder="Your password"
               className="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#1e2a78] text-black"
             />
           </div>
 
+          {error && (
+            <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
+              {error}
+            </p>
+          )}
+
           <button
             type="submit"
-            className="w-full rounded-full bg-[#1e2a78] py-3 font-semibold text-white hover:bg-[#161f5c]"
+            disabled={loading}
+            className="w-full rounded-full bg-[#1e2a78] py-3 font-semibold text-white hover:bg-[#161f5c] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Sign in
+            {loading ? "Signing in..." : "Sign in"}
           </button>
         </form>
 
