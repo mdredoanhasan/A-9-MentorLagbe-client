@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 import { FormEvent, useState } from "react";
 
 const inputStyle =
-  "mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#1e2a78] focus:ring-2 focus:ring-[#1e2a78]";
+  "mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#1e2a78] focus:ring-2 focus:ring-[#1e2a78] text-black";
 const labelStyle = "text-sm font-medium text-[#101535]";
 const hintStyle = "mt-2 text-sm text-slate-500";
 
@@ -28,8 +28,8 @@ export default function SignUpPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-[#faf8f4] px-4 py-16">
-      <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+    <main className="flex min-h-screen items-center justify-center bg-[#faf8f4] px-4 py-12">
+      <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
         <h1 className="font-(family-name:--font-fraunces) text-3xl font-bold text-[#101535]">
           Create your account
         </h1>
@@ -37,7 +37,7 @@ export default function SignUpPage() {
           Join as a student or a tutor. It takes under a minute.
         </p>
 
-        <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+        <form onSubmit={handleSubmit} className="mt-6 space-y-5">
           <div>
             <label htmlFor="name" className={labelStyle}>Full name</label>
             <input
