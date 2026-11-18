@@ -1,0 +1,119 @@
+"use client";
+
+import Link from "next/link";
+import { ChevronDown } from "lucide-react";
+import { FormEvent, useState } from "react";
+
+const inputStyle =
+  "mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#1e2a78] focus:ring-2 focus:ring-[#1e2a78]";
+const labelStyle = "text-sm font-medium text-[#101535]";
+const hintStyle = "mt-2 text-sm text-slate-500";
+
+export default function SignUpPage() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "student",
+  });
+
+  function update(field: string, value: string) {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  }
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    // TODO: call your register API here
+    console.log(form);
+  }
+
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-[#faf8f4] px-4 py-16">
+      <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+        <h1 className="font-(family-name:--font-fraunces) text-3xl font-bold text-[#101535]">
+          Create your account
+        </h1>
+        <p className="mt-1 text-slate-500">
+          Join as a student or a tutor. It takes under a minute.
+        </p>
+
+        <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+          <div>
+            <label htmlFor="name" className={labelStyle}>Full name</label>
+            <input
+              id="name"
+              type="text"
+              required
+              value={form.name}
+              onChange={(e) => update("name", e.target.value)}
+              placeholder="Your full name"
+              className={inputStyle}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="email" className={labelStyle}>Email</label>
+            <input
+              id="email"
+              type="email"
+              required
+              value={form.email}
+              onChange={(e) => update("email", e.target.value)}
+              placeholder="you@example.com"
+              className={inputStyle}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className={labelStyle}>Password</label>
+            <input
+              id="password"
+              type="password"
+              required
+              minLength={8}
+              value={form.password}
+              onChange={(e) => update("password", e.target.value)}
+              placeholder="Create a password"
+              className={inputStyle}
+            />
+            <p className={hintStyle}>At least 8 characters.</p>
+          </div>
+
+          <div>
+            <label htmlFor="role" className={labelStyle}>I am a</label>
+            <div className="relative">
+              <select
+                id="role"
+                value={form.role}
+                onChange={(e) => update("role", e.target.value)}
+                className={`${inputStyle} appearance-none bg-white pr-10`}
+              >
+                <option value="student">Student</option>
+                <option value="tutor">Tutor</option>
+              </select>
+              <ChevronDown
+                size={16}
+                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-500"
+              />
+            </div>
+            <p className={hintStyle}>Tutors post tuitions. Students apply to them.</p>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full rounded-full bg-[#1e2a78] py-3 font-semibold text-white hover:bg-[#161f5c]"
+          >
+            Create account
+          </button>
+        </form>
+
+        <p className="mt-6 text-center text-sm text-slate-500">
+          Already have an account?{" "}
+          <Link href="/sign-in" className="font-medium text-[#1e2a78] hover:underline">
+            Sign in
+          </Link>
+        </p>
+      </div>
+    </main>
+  );
+}
