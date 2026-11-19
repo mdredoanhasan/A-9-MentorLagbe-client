@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import {
   Search, ChevronDown, CloudOff, SearchX, MapPin, CalendarDays, Monitor, BookOpen,
@@ -57,7 +58,27 @@ function getFirstSearchParam(
   return (Array.isArray(value) ? value[0] : value) ?? "";
 }
 
-export default async function BrowseTuitionsPage({
+export default function BrowseTuitionsPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  return (
+    <Suspense
+      fallback={
+        <section className="bg-[#faf8f4] py-14">
+          <div className="mx-auto max-w-6xl px-6 text-slate-500">
+            Loading tuitions...
+          </div>
+        </section>
+      }
+    >
+      <TuitionResults searchParams={searchParams} />
+    </Suspense>
+  );
+}
+
+async function TuitionResults({
   searchParams,
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
