@@ -12,12 +12,12 @@ export default function SignInPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  function update(field: string, value: string) {
-    setForm((prev) => ({ ...prev, [field]: value }));
+  function updateFormField(fieldName: string, value: string) {
+    setForm((previousForm) => ({ ...previousForm, [fieldName]: value }));
   }
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setError("");
     setLoading(true);
 
@@ -67,7 +67,9 @@ export default function SignInPage() {
               required
               autoComplete="email"
               value={form.email}
-              onChange={(e) => update("email", e.target.value)}
+              onChange={(event) =>
+                updateFormField("email", event.target.value)
+              }
               placeholder="you@example.com"
               className="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#1e2a78] text-black"
             />
@@ -87,7 +89,9 @@ export default function SignInPage() {
               required
               autoComplete="current-password"
               value={form.password}
-              onChange={(e) => update("password", e.target.value)}
+              onChange={(event) =>
+                updateFormField("password", event.target.value)
+              }
               placeholder="Your password"
               className="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#1e2a78] text-black"
             />

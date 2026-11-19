@@ -1,17 +1,13 @@
 import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { FaXTwitter, FaFacebookF, FaLinkedinIn } from "react-icons/fa6";
+import FooterAccount from "./footer-account";
 
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "Browse Tuitions", href: "/tuitions" },
   { label: "Pricing", href: "/pricing" },
   { label: "How It Works", href: "/#how-it-works" },
-];
-
-const account = [
-  { label: "Sign In", href: "/sign-in" },
-  { label: "Sign Up", href: "/sign-up" },
 ];
 
 const socials = [
@@ -38,7 +34,7 @@ export default function Footer() {
             <span className="text-amber-500">Lagbe</span>
           </Link>
           <p className="mt-2 max-w-[17rem] text-slate-500">
-            Find the right tutor or the right student, with approvals and plans
+            Find the right mentor or the right student, with approvals and plans
             you can trust.
           </p>
           <div className="mt-4 flex gap-3">
@@ -72,15 +68,7 @@ export default function Footer() {
         {/* Account */}
         <div>
           <h3 className={heading}>Account</h3>
-          <ul className="mt-4 space-y-3">
-            {account.map((item) => (
-              <li key={item.label}>
-                <Link href={item.href} className={linkStyle}>
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <FooterAccount />
         </div>
 
         {/* Contact */}

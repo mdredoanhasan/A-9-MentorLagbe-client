@@ -17,20 +17,20 @@ export default function Hero() {
         {/* Left */}
         <div>
           <h1 className="font-(family-name:--font-fraunces) text-5xl font-bold leading-[1.05] text-[#101535]">
-            Find Your Ideal Tutor or Mentorship Batch Today
+            Find Your Ideal Mentor or Mentorship Batch Today
           </h1>
 
           <p className="mt-6 max-w-md text-lg leading-relaxed text-slate-500">
             Browse approved tuitions in Math, Physics, Programming, IELTS and
             more. Apply with your preferred schedule and hear back directly from
-            the tutor.
+            the mentor.
           </p>
 
-          {/* Search (submits to /tuitions?q=...) */}
+          {/* Search (submits to /tuitions?searchQuery=...) */}
           <form action="/tuitions" method="get" className="mt-8 flex gap-3">
             <input
               type="text"
-              name="q"
+              name="searchQuery"
               placeholder="Search a subject or title, e.g. Physics"
               className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#1e2a78] text-black/50"
             />
@@ -49,7 +49,7 @@ export default function Hero() {
             {popular.map((item) => (
               <Link
                 key={item}
-                href={`/tuitions?q=${item}`}
+                href={`/tuitions?searchQuery=${item}`}
                 className="rounded-full border border-gray-200 bg-white px-4 py-1 text-[#1e2a78] hover:border-[#1e2a78]"
               >
                 {item}
@@ -66,10 +66,10 @@ export default function Hero() {
               Browse Tuitions
             </Link>
             <Link
-              href="/become-a-tutor"
+              href="/become-a-mentor"
               className="rounded-xl border border-[#1e2a78] px-6 py-3 font-semibold text-[#1e2a78] hover:bg-[#1e2a78]/5"
             >
-              Become a Tutor
+              Become a Mentor
             </Link>
           </div>
 
@@ -81,7 +81,7 @@ export default function Hero() {
             </span>
             <span className="flex items-center gap-2">
               <GraduationCap size={16} className="text-[#1e2a78]" /> Online and
-              in-person tutors
+              in-person mentors
             </span>
             <span className="flex items-center gap-2">
               <Sparkles size={16} className="text-[#1e2a78]" /> Free to browse

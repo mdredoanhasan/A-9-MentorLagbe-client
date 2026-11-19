@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { authClient, useSession } from "@/app/lib/auth-client";
+import { normalizeUserRole } from "@/components/type";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
   DropdownMenu,
@@ -32,6 +33,7 @@ export default function Navbar() {
 
   const user = session?.user;
   const initial = user?.name?.trim().charAt(0).toUpperCase() || "U";
+  const userRole = normalizeUserRole(user?.role);
 
   async function handleSignOut() {
     setSignOutError("");
@@ -110,14 +112,23 @@ export default function Navbar() {
                     {user.email}
                   </span>
                   <span className="mt-2 inline-block rounded-full bg-amber-500/15 px-2.5 py-0.5 text-xs font-semibold capitalize text-amber-700">
-                    {user.role}
+                    {userRole}
                   </span>
                 </DropdownMenuLabel>
 
                 <DropdownMenuSeparator />
-
                 <DropdownMenuItem asChild>
-                  <Link href="/dashboard">Dashboard</Link>
+                  <Link
+                    href={
+                      userRole === "mentor"
+                        ? "/dashboard/mentor"
+                        : userRole === "admin"
+                          ? "/dashboard/admin"
+                          : "/dashboard/student"
+                    }
+                  >
+                    Dashboard
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/profile">Update profile</Link>

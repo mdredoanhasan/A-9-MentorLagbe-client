@@ -23,12 +23,12 @@ export default function SignUpPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  function update(field: string, value: string) {
-    setForm((prev) => ({ ...prev, [field]: value }));
+  function updateFormField(fieldName: string, value: string) {
+    setForm((previousForm) => ({ ...previousForm, [fieldName]: value }));
   }
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setError("");
     setLoading(true);
 
@@ -62,7 +62,7 @@ export default function SignUpPage() {
           Create your account
         </h1>
         <p className="mt-1 text-slate-500">
-          Join as a student or a tutor. It takes under a minute.
+          Join as a student or a mentor. It takes under a minute.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
@@ -76,7 +76,9 @@ export default function SignUpPage() {
               type="text"
               required
               value={form.name}
-              onChange={(e) => update("name", e.target.value)}
+              onChange={(event) =>
+                updateFormField("name", event.target.value)
+              }
               placeholder="Your full name"
               className={inputStyle}
             />
@@ -92,7 +94,9 @@ export default function SignUpPage() {
               type="email"
               required
               value={form.email}
-              onChange={(e) => update("email", e.target.value)}
+              onChange={(event) =>
+                updateFormField("email", event.target.value)
+              }
               placeholder="you@example.com"
               className={inputStyle}
             />
@@ -109,7 +113,9 @@ export default function SignUpPage() {
               required
               minLength={8}
               value={form.password}
-              onChange={(e) => update("password", e.target.value)}
+              onChange={(event) =>
+                updateFormField("password", event.target.value)
+              }
               placeholder="Create a password"
               className={inputStyle}
             />
@@ -125,11 +131,13 @@ export default function SignUpPage() {
                 id="role"
                 name="role"
                 value={form.role}
-                onChange={(e) => update("role", e.target.value)}
+                onChange={(event) =>
+                  updateFormField("role", event.target.value)
+                }
                 className={`${inputStyle} appearance-none bg-white pr-10`}
               >
                 <option value="student">Student</option>
-                <option value="tutor">Tutor</option>
+                <option value="mentor">Mentor</option>
               </select>
               <ChevronDown
                 size={16}
@@ -137,7 +145,7 @@ export default function SignUpPage() {
               />
             </div>
             <p className={hintStyle}>
-              Tutors post tuitions. Students apply to them.
+              Mentors post tuitions. Students apply to them.
             </p>
           </div>
 
