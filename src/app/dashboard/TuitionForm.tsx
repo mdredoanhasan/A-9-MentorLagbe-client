@@ -126,7 +126,7 @@ export function TuitionForm({
           className="h-9 w-full rounded-md border border-gray-200 bg-white px-3 text-sm"
         >
           <option value="online">Online</option>
-          <option value="in-person">In-person</option>
+          <option value="in-person">Offline</option>
         </select>
       </Field>
       <Field label="Location" error={fieldErrors.location}>
