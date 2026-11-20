@@ -16,8 +16,18 @@ export function RoleGuard({ role, children }: { role: UserRole; children: React.
     else if (currentRole !== role) router.replace(`/dashboard/${currentRole}`);
   }, [isPending, session, currentRole, role, router]);
 
-  if (isPending || !session || currentRole !== role) {
-    return <p className="text-slate-500">Loading…</p>;
-  }
-  return <>{children}</>;
+  const isAuthorized = !isPending && !!session && currentRole === role;
+
+  return (
+    <>
+      {!isAuthorized && <p className="text-slate-500">Loading…</p>}
+      <div
+        aria-hidden={!isAuthorized}
+        inert={!isAuthorized}
+        className={isAuthorized ? undefined : "invisible"}
+      >
+        {children}
+      </div>
+    </>
+  );
 }
