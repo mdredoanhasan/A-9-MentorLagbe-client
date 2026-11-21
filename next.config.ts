@@ -1,13 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  async redirects() {
+  async rewrites() {
     return [
       {
-        source: "/pricing",
-        destination: "/#pricing",
-        permanent: true,
+        source: "/api/:path*",
+        destination: `${process.env.NEXT_PUBLIC_API_URL}/api/:path*`,
       },
+    ];
+  },
+  async redirects() {
+    return [
       {
         source: "/dashboard/mentor/:path*",
         destination: "/dashboard/tutor/:path*",
