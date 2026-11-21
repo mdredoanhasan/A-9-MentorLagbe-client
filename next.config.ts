@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      {
+        source: "/dashboard/mentor/:path*",
+        destination: "/dashboard/tutor/:path*",
+        permanent: true,
+      },
+    ];
+  },
   cacheComponents: true,
   partialPrefetching: true,
   reactCompiler: true,

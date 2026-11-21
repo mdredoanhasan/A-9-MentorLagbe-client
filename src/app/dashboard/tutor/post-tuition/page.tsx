@@ -11,7 +11,7 @@ import { PageHeader } from "../../ui";
 
 export default function PostTuition() {
   const router = useRouter();
-  const { data: stats, loading } = useApi<{ plan: "free" | "pro"; totalTuitions: number }>("/api/mentor/stats");
+  const { data: stats, loading } = useApi<{ plan: "free" | "pro"; totalTuitions: number }>("/api/tutor/stats");
   const limitReached = stats?.plan === "free" && stats.totalTuitions >= 2;
 
   async function create(values: TuitionValues) {
@@ -26,7 +26,7 @@ export default function PostTuition() {
       }),
     });
     toast.success("Submitted. An admin will review your tuition.");
-    router.push("/dashboard/mentor/my-tuitions");
+    router.push("/dashboard/tutor/my-tuitions");
   }
 
   return (
@@ -35,7 +35,7 @@ export default function PostTuition() {
 
       {limitReached && (
         <div className="rounded-xl bg-amber-50 p-4 text-sm text-slate-700">
-          Free plan mentors can post up to 2 tuitions.{" "}
+          Free plan tutors can post up to 2 tuitions.{" "}
           <Link href="/pricing" className="font-semibold text-[#1e2a78] underline">
             Upgrade to Pro
           </Link>{" "}

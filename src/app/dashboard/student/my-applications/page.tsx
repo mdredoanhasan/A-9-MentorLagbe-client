@@ -25,11 +25,11 @@ export default function MyApplications() {
         columns={[
           { header: "Tuition", cell: (application) => <span className="font-medium">{application.tuitionTitle}</span> },
           {
-            header: "Mentor",
+            header: "Tutor",
             cell: (application) => (
               <div>
-                <p>{application.mentorName}</p>
-                <p className="text-xs text-slate-500">{application.mentorEmail}</p>
+                <p>{application.tutorName}</p>
+                <p className="text-xs text-slate-500">{application.tutorEmail}</p>
               </div>
             ),
           },

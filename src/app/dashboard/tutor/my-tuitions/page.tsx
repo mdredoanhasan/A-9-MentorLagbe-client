@@ -11,7 +11,7 @@ import { PageHeader, SimpleTable, StatusBadge } from "../../ui";
 
 
 export default function MyTuitions() {
-  const { data, loading, reload } = useApi<Tuition[]>("/api/mentor/tuitions");
+  const { data, loading, reload } = useApi<Tuition[]>("/api/tutor/tuitions");
   const [editing, setEditing] = useState<Tuition | null>(null);
 
   const patch = (id: string, body: object, msg: string) =>

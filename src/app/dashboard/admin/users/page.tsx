@@ -39,7 +39,7 @@ export default function UsersPage() {
                 className="h-9 rounded-md border border-gray-200 bg-white px-2 text-sm capitalize disabled:opacity-50"
               >
                 <option value="student">Student</option>
-                <option value="mentor">Mentor</option>
+                <option value="tutor">Tutor</option>
                 <option value="admin">Admin</option>
               </select>
             ),

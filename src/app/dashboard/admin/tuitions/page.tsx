@@ -19,7 +19,7 @@ export default function AdminTuitions() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Tuition approval" subtitle="Review posts submitted by mentors." />
+      <PageHeader title="Tuition approval" subtitle="Review posts submitted by tutors." />
       <SimpleTable<Tuition>
         rows={data}
         loading={loading}
@@ -27,11 +27,11 @@ export default function AdminTuitions() {
         columns={[
           { header: "Title", cell: (tuition) => <span className="font-medium">{tuition.title}</span> },
           {
-            header: "Mentor",
+            header: "Tutor",
             cell: (tuition) => (
               <div>
-                <p>{tuition.mentorName}</p>
-                <p className="text-xs text-slate-500">{tuition.mentorEmail}</p>
+                <p>{tuition.tutorName}</p>
+                <p className="text-xs text-slate-500">{tuition.tutorEmail}</p>
               </div>
             ),
           },

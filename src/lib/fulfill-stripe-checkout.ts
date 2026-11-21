@@ -3,7 +3,11 @@ import "server-only";
 import { ObjectId } from "mongodb";
 import { database } from "@/app/lib/auth";
 import { getStripe } from "@/lib/stripe";
-import { getProPlan, normalizePlanRole } from "@/lib/stripe-plans";
+import {
+  getProPlan,
+  getProPlanPriceId,
+  normalizePlanRole,
+} from "@/lib/stripe-plans";
 
 export class CheckoutFulfillmentError extends Error {
   constructor(
@@ -53,7 +57,7 @@ export async function fulfillStripeCheckout(
     lineItems.data[0].quantity !== 1 ||
     (typeof lineItems.data[0].price === "string"
       ? lineItems.data[0].price
-      : lineItems.data[0].price?.id) !== plan.priceId
+      : lineItems.data[0].price?.id) !== getProPlanPriceId(planId, plan)
   ) {
     throw new CheckoutFulfillmentError("The purchased plan does not match this account.", 400);
   }

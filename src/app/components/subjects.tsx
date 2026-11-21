@@ -15,18 +15,18 @@ const subjects: { name: string; icon: LucideIcon }[] = [
 ];
 
 type SubjectsProps = {
-  mentorCount?: number;
+  tutorCount?: number;
   studentCount?: number;
   liveTuitions?: number;
 };
 
 export default function Subjects({
-  mentorCount = 0,
+  tutorCount = 0,
   studentCount = 0,
   liveTuitions = 0,
 }: SubjectsProps) {
   const statistics = [
-    { label: "Mentors", value: mentorCount },
+    { label: "Tutors", value: tutorCount },
     { label: "Students", value: studentCount },
     { label: "Live tuitions", value: liveTuitions },
   ];

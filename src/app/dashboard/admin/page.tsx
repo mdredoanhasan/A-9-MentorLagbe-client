@@ -5,7 +5,7 @@ import { StatsOverview } from "../ui";
 
 
 type Stats = {
-  totalUsers: number; totalMentors: number;
+  totalUsers: number; totalTutors: number;
   pendingTuitions: number; approvedTuitions: number; revenue: number;
 };
 
@@ -17,7 +17,7 @@ export default function AdminOverview() {
       endpoint="/api/admin/stats"
       cards={(statistics) => [
         { icon: Users, label: "Total users", value: statistics.totalUsers, note: "All registered accounts" },
-        { icon: GraduationCap, label: "Total mentors", value: statistics.totalMentors, note: "Accounts with mentor role" },
+        { icon: GraduationCap, label: "Total tutors", value: statistics.totalTutors, note: "Accounts with tutor role" },
         {
           icon: ShieldCheck,
           label: "Pending / Approved",

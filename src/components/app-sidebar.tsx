@@ -19,11 +19,11 @@ const menuItemsByRole: Record<UserRole, SidebarNavItem[]> = {
     { _id: "s1", name: "Overview", url: "/dashboard/student", icon: LayoutDashboard },
     { _id: "s2", name: "My Applications", url: "/dashboard/student/my-applications", icon: FileText },
   ],
-  mentor: [
-    { _id: "m1", name: "Overview", url: "/dashboard/mentor", icon: LayoutDashboard },
-    { _id: "m2", name: "Post Tuition", url: "/dashboard/mentor/post-tuition", icon: PlusCircle },
-    { _id: "m3", name: "My Tuitions", url: "/dashboard/mentor/my-tuitions", icon: BookOpen },
-    { _id: "m4", name: "Applicants", url: "/dashboard/mentor/applicants", icon: Users },
+  tutor: [
+    { _id: "t1", name: "Overview", url: "/dashboard/tutor", icon: LayoutDashboard },
+    { _id: "t2", name: "Post Tuition", url: "/dashboard/tutor/post-tuition", icon: PlusCircle },
+    { _id: "t3", name: "My Tuitions", url: "/dashboard/tutor/my-tuitions", icon: BookOpen },
+    { _id: "t4", name: "Applicants", url: "/dashboard/tutor/applicants", icon: Users },
   ],
   admin: [
     { _id: "a1", name: "Overview", url: "/dashboard/admin", icon: LayoutDashboard },

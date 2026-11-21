@@ -1,9 +1,9 @@
 import type { LucideIcon } from "lucide-react";
 
-export type UserRole = "student" | "mentor" | "admin";
+export type UserRole = "student" | "tutor" | "admin";
 
 export function normalizeUserRole(role: string | undefined): UserRole {
-  if (role === "mentor" || role === "tutor") return "mentor";
+  if (role === "mentor" || role === "tutor") return "tutor";
   if (role === "admin") return "admin";
   return "student";
 }
@@ -23,15 +23,15 @@ export type Tuition = {
   bannerUrl: string;
   approvalStatus: "pending" | "approved" | "rejected";
   status: "active" | "closed";
-  mentorName?: string;
-  mentorEmail?: string;
+  tutorName?: string;
+  tutorEmail?: string;
 };
 
 export type Application = {
   _id: string;
   tuitionTitle: string;
-  mentorName: string;
-  mentorEmail: string;
+  tutorName: string;
+  tutorEmail: string;
   monthlyFee: number;
   createdAt: string;
   status: "pending" | "accepted" | "rejected";

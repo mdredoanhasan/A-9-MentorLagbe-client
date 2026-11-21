@@ -6,12 +6,12 @@ import { StatsOverview } from "../ui";
 
 type Stats = { totalTuitions: number; approved: number; applicants: number; plan: "free" | "pro" };
 
-export default function MentorOverview() {
+export default function TutorOverview() {
   return (
     <StatsOverview<Stats>
-      title="Mentor overview"
+      title="Tutor overview"
       subtitle="Your tuitions and applicants at a glance."
-      endpoint="/api/mentor/stats"
+      endpoint="/api/tutor/stats"
       cards={(statistics) => [
         { icon: BookOpen, label: "Tuitions posted", value: statistics.totalTuitions, note: "All your posts" },
         { icon: ShieldCheck, label: "Approved", value: statistics.approved, note: "Live and approved" },

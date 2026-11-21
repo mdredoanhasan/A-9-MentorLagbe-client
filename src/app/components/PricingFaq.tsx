@@ -6,7 +6,7 @@ import { useSession } from "@/app/lib/auth-client";
 const faqs = [
   {
     question: "Is MentorLagbe free to use?",
-    answer: "Yes. Students can browse and apply for free, and mentors can post up to 2 tuitions on the Free plan.",
+    answer: "Yes. Students can browse and apply for free, and tutors can post up to 2 tuitions on the Free plan.",
   },
   {
     question: "How do I upgrade to Pro?",
@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     question: "Which plan is for me?",
-    answer: "Mentors choose Pro Mentor for unlimited tuition posts. Students choose Pro Student. A plan only works for the matching account type.",
+    answer: "Tutors choose Pro Tutor for unlimited tuition posts. Students choose Pro Student. A plan only works for the matching account type.",
   },
 ];
 
@@ -31,8 +31,8 @@ function RoleButton() {
   // Admin: no button
   if (role === "admin") return null;
 
-  // Mentor: Post Tuition
-  if (role === "mentor" || role === "tutor") {
+  // Tutor: Post Tuition
+  if (role === "tutor" || role === "mentor") {
     return (
       <Link href="/dashboard/tutor/post-tuition" className={buttonStyle}>
         Post Tuition

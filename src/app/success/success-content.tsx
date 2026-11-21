@@ -68,8 +68,8 @@ export default function CheckoutSuccess({
         message: "We could not find a Stripe checkout session to verify.",
       };
   const dashboardHref =
-    displayedVerification.status === "success" && displayedVerification.role === "mentor"
-      ? "/dashboard/mentor"
+    displayedVerification.status === "success" && displayedVerification.role === "tutor"
+      ? "/dashboard/tutor"
       : "/dashboard/student";
 
   return (

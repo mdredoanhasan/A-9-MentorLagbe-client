@@ -104,7 +104,7 @@ export default function TuitionDetails({ tuitionId }: { tuitionId: string }) {
       setHasApplied(true);
       setIsApplyDialogOpen(false);
       setApplicationForm(emptyApplicationForm);
-      toast.success("Your application has been sent to the mentor.");
+      toast.success("Your application has been sent to the tutor.");
     } catch (requestError) {
       toast.error(
         requestError instanceof Error
@@ -266,7 +266,7 @@ export default function TuitionDetails({ tuitionId }: { tuitionId: string }) {
                     <UserRound size={20} aria-hidden="true" />
                   </span>
                   <span className="font-semibold text-[#101535]">
-                    {tuition.mentorName || "Mentor"}
+                    {tuition.tutorName || "Tutor"}
                   </span>
                 </div>
               </div>
@@ -342,7 +342,7 @@ export default function TuitionDetails({ tuitionId }: { tuitionId: string }) {
               Apply for this tuition
             </DialogTitle>
             <DialogDescription>
-              Share your contact details and preferred schedule with the mentor.
+              Share your contact details and preferred schedule with the tutor.
             </DialogDescription>
           </DialogHeader>
 
@@ -384,7 +384,7 @@ export default function TuitionDetails({ tuitionId }: { tuitionId: string }) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="application-note">Message for the mentor</Label>
+              <Label htmlFor="application-note">Message for the tutor</Label>
               <Textarea
                 id="application-note"
                 rows={4}
@@ -396,7 +396,7 @@ export default function TuitionDetails({ tuitionId }: { tuitionId: string }) {
                     note: event.target.value,
                   }))
                 }
-                placeholder="Tell the mentor a little about your learning goals (optional)"
+                placeholder="Tell the tutor a little about your learning goals (optional)"
               />
             </div>
 

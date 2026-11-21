@@ -62,7 +62,7 @@ export default function SignUpPage() {
           Create your account
         </h1>
         <p className="mt-1 text-slate-500">
-          Join as a student or a mentor. It takes under a minute.
+          Join as a student or a tutor. It takes under a minute.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">
@@ -137,7 +137,7 @@ export default function SignUpPage() {
                 className={`${inputStyle} appearance-none bg-white pr-10`}
               >
                 <option value="student">Student</option>
-                <option value="mentor">Mentor</option>
+                <option value="tutor">Tutor</option>
               </select>
               <ChevronDown
                 size={16}
@@ -145,7 +145,7 @@ export default function SignUpPage() {
               />
             </div>
             <p className={hintStyle}>
-              Mentors post tuitions. Students apply to them.
+              Tutors post tuitions. Students apply to them.
             </p>
           </div>
 

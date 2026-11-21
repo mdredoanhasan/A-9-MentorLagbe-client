@@ -152,7 +152,7 @@ async function TuitionResults({
       <div className="mx-auto max-w-6xl px-6">
         <h1 className={`${heading} text-4xl sm:text-5xl`}>Browse Tuitions</h1>
         <p className="mt-3 text-slate-500">
-          Search approved tuition batches and 1-on-1 mentorships by subject, class
+          Search approved tuition batches and 1-on-1 tutoring by subject, class
           level and mode.
         </p>
 
@@ -280,7 +280,7 @@ function Select({
 
 function TuitionCard({ tuition }: { tuition: Tuition }) {
   const isOnline = tuition.mode?.toLowerCase() === "online";
-  const tutorName = tuition.mentorName;
+  const tutorName = tuition.tutorName;
   const fee = Number(tuition.monthlyFee);
 
   return (

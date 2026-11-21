@@ -120,8 +120,8 @@ export default function Navbar() {
                 <DropdownMenuItem asChild>
                   <Link
                     href={
-                      userRole === "mentor"
-                        ? "/dashboard/mentor"
+                      userRole === "tutor"
+                        ? "/dashboard/tutor"
                         : userRole === "admin"
                           ? "/dashboard/admin"
                           : "/dashboard/student"

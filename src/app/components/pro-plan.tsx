@@ -6,7 +6,7 @@ import { useState } from "react";
 
 type Plan = {
   id: string;
-  role?: "mentor" | "student";
+  role?: "tutor" | "student";
   name: string;
   description: string;
   price: number;
@@ -19,10 +19,10 @@ type Plan = {
 
 const groups: { heading: string; plans: Plan[] }[] = [
   {
-    heading: "For Mentors",
+    heading: "For Tutors",
     plans: [
       {
-        id: "free-mentor",
+        id: "free-tutor",
         name: "Free",
         description: "Start listing and meet your first students.",
         price: 0,
@@ -36,9 +36,9 @@ const groups: { heading: string; plans: Plan[] }[] = [
         href: "/sign-up",
       },
       {
-        id: "pro-mentor",
-        role: "mentor",
-        name: "Pro Mentor",
+        id: "pro-tutor",
+        role: "tutor",
+        name: "Pro Tutor",
         description: "Grow without a cap on your listings.",
         price: 15,
         note: "one-time, USD",
@@ -58,7 +58,7 @@ const groups: { heading: string; plans: Plan[] }[] = [
       {
         id: "free-student",
         name: "Free",
-        description: "Everything you need to find a mentor.",
+        description: "Everything you need to find a tutor.",
         price: 0,
         note: "forever",
         features: [
@@ -196,7 +196,7 @@ export default function PricingPage() {
             Pricing
           </p>
           <h1 className={`${heading} mt-2 text-4xl`}>
-            Simple Plans for Mentors and Students
+            Simple Plans for Tutors and Students
           </h1>
           <p className="mt-3 text-slate-500">
             Start free. Upgrade to Pro when you need more.

@@ -34,7 +34,7 @@ export default function Footer() {
             <span className="text-amber-500">Lagbe</span>
           </Link>
           <p className="mt-2 max-w-[17rem] text-slate-500">
-            Find the right mentor or the right student, with approvals and plans
+            Find the right tutor or the right student, with approvals and plans
             you can trust.
           </p>
           <div className="mt-4 flex gap-3">

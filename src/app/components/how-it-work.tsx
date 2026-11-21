@@ -12,14 +12,14 @@ const groups: { heading: string; steps: Step[] }[] = [
     steps: [
       { icon: Search, title: "Browse and filter", text: "Search by subject, class level and mode to shortlist tuitions." },
       { icon: Send, title: "Apply", text: "Share your phone, preferred schedule and what you want to learn." },
-      { icon: UserCheck, title: "Mentor decides", text: "The mentor reviews your application and accepts or declines." },
+      { icon: UserCheck, title: "Tutor decides", text: "The tutor reviews your application and accepts or declines." },
       { icon: GraduationCap, title: "Start learning", text: "Track the status in your dashboard and begin your classes." },
     ],
   },
   {
-    heading: "For Mentors",
+    heading: "For Tutors",
     steps: [
-      { icon: UserPlus, title: "Create your account", text: "Sign up as a mentor and complete your profile." },
+      { icon: UserPlus, title: "Create your account", text: "Sign up as a tutor and complete your profile." },
       { icon: FilePlus, title: "Post a tuition", text: "Add subject, fee, schedule and a banner for your batch." },
       { icon: ShieldCheck, title: "Get approved", text: "An admin reviews the listing before it goes public." },
       { icon: CircleCheck, title: "Accept students", text: "Review applicants and confirm the ones you want to teach." },
@@ -38,7 +38,7 @@ export default function HowItWorks() {
             How MentorLagbe Works
           </h2>
           <p className="mt-3 text-slate-500">
-            A simple flow for students looking for a mentor and mentors looking for students.
+            A simple flow for students looking for a tutor and tutors looking for students.
           </p>
         </div>
 

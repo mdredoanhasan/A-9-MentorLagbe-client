@@ -8,7 +8,7 @@ import { Application } from "@/components/type";
 
 
 export default function Applicants() {
-  const { data, loading, reload } = useApi<Application[]>("/api/mentor/applicants");
+  const { data, loading, reload } = useApi<Application[]>("/api/tutor/applicants");
 
   const setStatus = (id: string, status: "accepted" | "rejected") =>
     runAction(
