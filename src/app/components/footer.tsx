@@ -6,8 +6,8 @@ import FooterAccount from "./footer-account";
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "Browse Tuitions", href: "/tuitions" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Pricing", href: "/#pricing" },
+  { label: "How It Works", href: "/#how-it-work" },
 ];
 
 const socials = [

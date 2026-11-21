@@ -29,7 +29,7 @@ const groups: { heading: string; steps: Step[] }[] = [
 
 export default function HowItWorks() {
   return (
-    <section className="bg-[#faf8f4] py-20">
+    <section id="how-it-work" className="scroll-mt-24 bg-[#faf8f4] py-20">
       <div className="mx-auto max-w-6xl px-6">
         {/* Heading */}
         <div className="text-center">

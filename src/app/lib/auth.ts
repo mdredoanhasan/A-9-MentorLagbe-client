@@ -23,6 +23,16 @@ export const auth = betterAuth({
         defaultValue: "student",
         input: true, // lets the sign-up form send the role
       },
+      phone: {
+        type: "string",
+        required: false,
+        input: true,
+      },
+      bio: {
+        type: "string",
+        required: false,
+        input: true, // lets the sign-up form send the role
+      },
     },
   },
 });

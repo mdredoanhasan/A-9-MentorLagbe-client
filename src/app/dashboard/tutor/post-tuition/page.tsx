@@ -26,6 +26,7 @@ export default function PostTuition() {
       }),
     });
     toast.success("Submitted. An admin will review your tuition.");
+    router.refresh();
     router.push("/dashboard/tutor/my-tuitions");
   }
 
@@ -36,7 +37,7 @@ export default function PostTuition() {
       {limitReached && (
         <div className="rounded-xl bg-amber-50 p-4 text-sm text-slate-700">
           Free plan tutors can post up to 2 tuitions.{" "}
-          <Link href="/pricing" className="font-semibold text-[#1e2a78] underline">
+          <Link href="/#pricing" className="font-semibold text-[#1e2a78] underline">
             Upgrade to Pro
           </Link>{" "}
           for unlimited posts.
