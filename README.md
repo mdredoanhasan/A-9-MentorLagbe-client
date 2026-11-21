@@ -20,6 +20,25 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Stripe Pro checkout
+
+The Pro Mentor and Pro Student plans use separate one-time Stripe Checkout prices.
+The checkout route selects the matching price from the signed-in user's role; a
+payment is verified with Stripe before the user's `plan` is changed to `pro`.
+Successful payments are also saved to MongoDB's `payments` collection.
+
+Copy the Stripe values from `.env.example` into `.env`. Set `STRIPE_SECRET_KEY`
+and configure `STRIPE_WEBHOOK_SECRET` from Stripe. To test webhooks locally, run
+`stripe listen --forward-to localhost:3000/api/stripe/webhook` and use the
+signing secret printed by Stripe CLI. Subscribe the webhook to
+`checkout.session.completed` and `checkout.session.async_payment_succeeded`.
+The existing Pro price IDs are used by default; set
+`STRIPE_MENTOR_PRO_PRICE_ID` and `STRIPE_STUDENT_PRO_PRICE_ID` to override them.
+
+The success page also verifies the Checkout Session, so Pro is activated when
+the customer returns. The webhook covers payments where they do not return.
+Stripe-hosted Checkout does not need the publishable key in the browser.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

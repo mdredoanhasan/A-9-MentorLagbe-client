@@ -8,7 +8,7 @@ if (!mongoUri) {
 }
 
 const client = new MongoClient(mongoUri);
-const database = client.db("Mentor-lagbe");
+export const database = client.db("Mentor-lagbe");
 
 export const auth = betterAuth({
   database: mongodbAdapter(database),

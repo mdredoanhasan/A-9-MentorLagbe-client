@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { Check } from "lucide-react";
+import { useState } from "react";
 
 type Plan = {
   id: string;
+  role?: "mentor" | "student";
   name: string;
   description: string;
   price: number;
@@ -35,6 +37,7 @@ const groups: { heading: string; plans: Plan[] }[] = [
       },
       {
         id: "pro-mentor",
+        role: "mentor",
         name: "Pro Mentor",
         description: "Grow without a cap on your listings.",
         price: 15,
@@ -68,6 +71,7 @@ const groups: { heading: string; plans: Plan[] }[] = [
       },
       {
         id: "pro-student",
+        role: "student",
         name: "Pro Student",
         description: "Support the platform and stand out.",
         price: 10,
@@ -83,13 +87,17 @@ const groups: { heading: string; plans: Plan[] }[] = [
 const heading =
   "font-[family-name:var(--font-fraunces)] font-bold text-[#101535]";
 
-async function subscribe(planId: string) {
-  // TODO: call your Express endpoint that creates a Stripe Checkout session,
-  // then redirect to the returned URL.
-  console.log("Subscribe to", planId);
-}
-
-function PlanCard({ plan }: { plan: Plan }) {
+function PlanCard({
+  plan,
+  isCheckingOut,
+  isDisabled,
+  onSubscribe,
+}: {
+  plan: Plan;
+  isCheckingOut: boolean;
+  isDisabled: boolean;
+  onSubscribe: (planId: string) => void;
+}) {
   const { highlighted } = plan;
 
   return (
@@ -133,10 +141,13 @@ function PlanCard({ plan }: { plan: Plan }) {
         </Link>
       ) : (
         <button
-          onClick={() => subscribe(plan.id)}
-          className="mt-8 rounded-xl bg-amber-500 py-3 font-semibold text-[#101535] hover:bg-amber-400"
+          type="button"
+          disabled={isDisabled}
+          aria-busy={isCheckingOut}
+          onClick={() => onSubscribe(plan.id)}
+          className="mt-8 rounded-xl bg-amber-500 py-3 font-semibold text-[#101535] hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {plan.cta}
+          {isCheckingOut ? "Opening secure checkout..." : plan.cta}
         </button>
       )}
     </div>
@@ -144,8 +155,40 @@ function PlanCard({ plan }: { plan: Plan }) {
 }
 
 export default function PricingPage() {
+  const [pendingPlanId, setPendingPlanId] = useState("");
+  const [checkoutError, setCheckoutError] = useState("");
+
+  async function subscribe(planId: string) {
+    setPendingPlanId(planId);
+    setCheckoutError("");
+
+    try {
+      const response = await fetch("/api/checkout_sessions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify({ planId }),
+      });
+      const result = (await response.json()) as {
+        url?: string;
+        error?: string;
+      };
+
+      if (!response.ok || !result.url) {
+        throw new Error(result.error || "Could not start checkout.");
+      }
+
+      window.location.assign(result.url);
+    } catch (error) {
+      setCheckoutError(
+        error instanceof Error ? error.message : "Could not start checkout.",
+      );
+      setPendingPlanId("");
+    }
+  }
+
   return (
-    <section className="bg-[#faf8f4] py-20">
+    <section id="pricing" className="bg-[#faf8f4] py-20">
       <div className="mx-auto max-w-4xl px-6">
         {/* Heading */}
         <div className="text-center">
@@ -161,6 +204,14 @@ export default function PricingPage() {
         </div>
 
         {/* Plan groups */}
+        {checkoutError && (
+          <p
+            role="alert"
+            className="mx-auto mt-8 max-w-2xl rounded-xl bg-red-50 px-4 py-3 text-center text-sm text-red-700"
+          >
+            {checkoutError}
+          </p>
+        )}
         {groups.map((group) => (
           <div key={group.heading} className="mt-14">
             <h2 className={`${heading} text-center text-2xl`}>
@@ -168,7 +219,13 @@ export default function PricingPage() {
             </h2>
             <div className="mt-6 grid gap-6 md:grid-cols-2">
               {group.plans.map((plan) => (
-                <PlanCard key={plan.id} plan={plan} />
+                <PlanCard
+                  key={plan.id}
+                  plan={plan}
+                  isCheckingOut={pendingPlanId === plan.id}
+                  isDisabled={Boolean(pendingPlanId)}
+                  onSubscribe={subscribe}
+                />
               ))}
             </div>
           </div>
