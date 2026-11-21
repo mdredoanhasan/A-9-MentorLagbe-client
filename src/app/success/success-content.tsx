@@ -98,6 +98,7 @@ export default function CheckoutSuccess({
               payment.
             </p>
             <Button
+              nativeButton={false}
               render={<Link href={dashboardHref} />}
               className="mt-7 bg-[#1e2a78] text-white hover:bg-[#161f5c]"
             >
@@ -121,12 +122,17 @@ export default function CheckoutSuccess({
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-3">
               <Button
+                nativeButton={false}
                 render={<Link href="/" />}
                 className="bg-[#1e2a78] text-white hover:bg-[#161f5c]"
               >
                 Back to MentorLagbe
               </Button>
-              <Button render={<Link href="/sign-in" />} variant="outline">
+              <Button
+                nativeButton={false}
+                render={<Link href="/sign-in" />}
+                variant="outline"
+              >
                 Sign in
               </Button>
             </div>

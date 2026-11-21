@@ -140,6 +140,7 @@ export default function TuitionDetails({ tuitionId }: { tuitionId: string }) {
           )}
           <div>
             <Button
+              nativeButton={false}
               render={<Link href="/tuitions" />}
               className="mt-5 bg-[#1e2a78] text-white hover:bg-[#161f5c]"
             >
@@ -311,6 +312,7 @@ export default function TuitionDetails({ tuitionId }: { tuitionId: string }) {
                       Sign in with a student account to apply.
                     </p>
                     <Button
+                      nativeButton={false}
                       render={<Link href="/sign-in" />}
                       className="h-11 w-full bg-[#1e2a78] text-white hover:bg-[#161f5c]"
                     >

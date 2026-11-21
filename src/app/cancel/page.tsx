@@ -17,12 +17,17 @@ export default function CheckoutCancelledPage() {
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-3">
           <Button
+            nativeButton={false}
             render={<Link href="/#pricing" />}
             className="bg-[#1e2a78] text-white hover:bg-[#161f5c]"
           >
             View plans
           </Button>
-          <Button render={<Link href="/" />} variant="outline">
+          <Button
+            nativeButton={false}
+            render={<Link href="/" />}
+            variant="outline"
+          >
             Back to home
           </Button>
         </div>
