@@ -9,6 +9,7 @@ import {
   CalendarDays,
 } from "lucide-react";
 import TryAgain from "../components/TryAgain";
+import { BookmarkButton, BookmarkProvider } from "../components/bookmark-controls";
 import { Tuition } from "@/components/type";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
@@ -220,11 +221,13 @@ async function TuitionResults({
                 {(page - 1) * PAGE_SIZE + result.tuitions.length} of {result.total}{" "}
                 approved {result.total === 1 ? "tuition" : "tuitions"}
               </p>
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {result.tuitions.map((tuition) => (
-                  <TuitionCard key={tuition._id} tuition={tuition} />
-                ))}
-              </div>
+              <BookmarkProvider>
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {result.tuitions.map((tuition) => (
+                    <TuitionCard key={tuition._id} tuition={tuition} />
+                  ))}
+                </div>
+              </BookmarkProvider>
               {result.totalPages > 1 && (
                 <Pagination
                   filters={filters}
@@ -290,6 +293,10 @@ function TuitionCard({ tuition }: { tuition: Tuition }) {
         className="relative h-37.5 shrink-0 overflow-hidden"
         style={{ backgroundColor: subjectColor(tuition.subject) }}
       >
+        <BookmarkButton
+          tuitionId={tuition._id}
+          className="absolute right-4 top-4 z-10"
+        />
         {tuition.bannerUrl ? (
           <>
             {/* eslint-disable-next-line @next/next/no-img-element */}

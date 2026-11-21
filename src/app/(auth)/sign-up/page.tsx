@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Eye, EyeOff } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { authClient } from "@/app/lib/auth-client";
+import { toast } from "sonner";
 
 const inputStyle =
   "mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#1e2a78] focus:ring-2 focus:ring-[#1e2a78] text-black";
@@ -22,6 +23,7 @@ export default function SignUpPage() {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   function updateFormField(fieldName: string, value: string) {
     setForm((previousForm) => ({ ...previousForm, [fieldName]: value }));
@@ -33,7 +35,7 @@ export default function SignUpPage() {
     setLoading(true);
 
     try {
-      const { data, error } = await authClient.signUp.email({
+      const { error } = await authClient.signUp.email({
         name: form.name,
         email: form.email,
         password: form.password,
@@ -41,15 +43,19 @@ export default function SignUpPage() {
       });
 
       if (error) {
-        setError(error.message ?? "Something went wrong. Please try again.");
+        const message = error.message ?? "Something went wrong. Please try again.";
+        setError(message);
+        toast.error(message);
         return;
       }
 
-      console.log(data);
+      toast.success("Account created successfully.");
       router.push("/");
       router.refresh();
     } catch {
-      setError("Network error. Please try again.");
+      const message = "Network error. Please try again.";
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }
@@ -106,19 +112,34 @@ export default function SignUpPage() {
             <label htmlFor="password" className={labelStyle}>
               Password
             </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              minLength={8}
-              value={form.password}
-              onChange={(event) =>
-                updateFormField("password", event.target.value)
-              }
-              placeholder="Create a password"
-              className={inputStyle}
-            />
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={isPasswordVisible ? "text" : "password"}
+                required
+                minLength={8}
+                value={form.password}
+                onChange={(event) =>
+                  updateFormField("password", event.target.value)
+                }
+                placeholder="Create a password"
+                className={`${inputStyle} pr-12`}
+              />
+              <button
+                type="button"
+                aria-label={isPasswordVisible ? "Hide password" : "Show password"}
+                aria-pressed={isPasswordVisible}
+                onClick={() => setIsPasswordVisible((visible) => !visible)}
+                className="absolute right-3 top-1/2 mt-0.5 -translate-y-1/2 rounded-md p-1 text-slate-500 hover:text-[#1e2a78] focus-visible:outline-2 focus-visible:outline-[#1e2a78]"
+              >
+                {isPasswordVisible ? (
+                  <EyeOff size={18} aria-hidden="true" />
+                ) : (
+                  <Eye size={18} aria-hidden="true" />
+                )}
+              </button>
+            </div>
             <p className={hintStyle}>At least 8 characters.</p>
           </div>
 

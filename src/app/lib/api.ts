@@ -1,4 +1,5 @@
 import { toast } from "sonner";
+import { authClient } from "./auth-client";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
@@ -7,10 +8,25 @@ export async function api<T = unknown>(
   path: string,
   init?: RequestInit,
 ): Promise<T> {
+  const headers = new Headers(init?.headers);
+  if (!headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
+
+  if (!headers.has("Authorization")) {
+    const { data: tokenData, error: tokenError } = await authClient.token();
+    if (tokenError && tokenError.status !== 401) {
+      throw new Error(tokenError.message ?? "Could not retrieve access token.");
+    }
+    if (tokenData?.token) {
+      headers.set("Authorization", `Bearer ${tokenData.token}`);
+    }
+  }
+
   const response = await fetch(`${API_BASE_URL}${path}`, {
     credentials: "include",
-    headers: { "Content-Type": "application/json" },
     ...init,
+    headers,
   });
   if (!response.ok) {
     const body = await response.json().catch(() => null);

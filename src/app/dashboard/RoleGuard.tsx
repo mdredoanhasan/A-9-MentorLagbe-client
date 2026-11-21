@@ -1,33 +1,57 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { toast } from "sonner";
+import type { UserRole } from "@/components/type";
 import { useRole } from "./use-role";
-import { UserRole } from "@/components/type";
 
-
-export function RoleGuard({ role, children }: { role: UserRole; children: React.ReactNode }) {
+export function RoleGuard({
+  allowedRoles,
+  children,
+}: {
+  allowedRoles?: UserRole[];
+  children: React.ReactNode;
+}) {
   const { session, role: currentRole, isPending } = useRole();
   const router = useRouter();
+  const pathname = usePathname();
+  const redirectStarted = useRef(false);
 
   useEffect(() => {
-    if (isPending) return;
-    if (!session) router.replace("/sign-in");
-    else if (currentRole !== role) router.replace(`/dashboard/${currentRole}`);
-  }, [isPending, session, currentRole, role, router]);
+    if (isPending || redirectStarted.current) return;
 
-  const isAuthorized = !isPending && !!session && currentRole === role;
+    if (!session) {
+      redirectStarted.current = true;
+      const currentPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      toast.error("Please sign in to continue.");
+      router.replace(
+        `/sign-in?callbackUrl=${encodeURIComponent(currentPath)}`,
+      );
+      return;
+    }
 
-  return (
-    <>
-      {!isAuthorized && <p className="text-slate-500">Loading…</p>}
-      <div
-        aria-hidden={!isAuthorized}
-        inert={!isAuthorized}
-        className={isAuthorized ? undefined : "invisible"}
-      >
-        {children}
-      </div>
-    </>
-  );
+    if (allowedRoles && !allowedRoles.includes(currentRole)) {
+      redirectStarted.current = true;
+      toast.error("You do not have permission to open that page.");
+      router.replace("/unauthorized");
+    }
+  }, [allowedRoles, currentRole, isPending, pathname, router, session]);
+
+  const isAuthorized =
+    !isPending &&
+    !!session &&
+    (!allowedRoles || allowedRoles.includes(currentRole));
+
+  if (!isAuthorized) {
+    return (
+      <main className="flex min-h-[50vh] items-center justify-center bg-[#faf8f4] px-6">
+        <p role="status" className="text-slate-500">
+          Checking your account...
+        </p>
+      </main>
+    );
+  }
+
+  return children;
 }

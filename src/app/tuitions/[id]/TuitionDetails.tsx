@@ -12,6 +12,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { toast } from "sonner";
+import { BookmarkButton } from "@/app/components/bookmark-controls";
 import { api } from "@/app/lib/api";
 import { useRole } from "@/app/dashboard/use-role";
 import { Button } from "@/components/ui/button";
@@ -269,6 +270,13 @@ export default function TuitionDetails({ tuitionId }: { tuitionId: string }) {
                     {tuition.tutorName || "Tutor"}
                   </span>
                 </div>
+              </div>
+
+              <div className="border-t border-[#e3e5f5] pt-5">
+                <BookmarkButton
+                  tuitionId={tuition._id}
+                  className="h-11 w-full"
+                />
               </div>
 
               <div className="border-t border-[#e3e5f5] pt-5">

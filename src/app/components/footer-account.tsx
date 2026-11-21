@@ -4,26 +4,27 @@ import Link from "next/link";
 import { useState } from "react";
 import { authClient, useSession } from "@/app/lib/auth-client";
 import { normalizeUserRole } from "@/components/type";
+import { toast } from "sonner";
 
 const linkStyle = "text-slate-500 hover:text-[#1e2a78]";
 
 export default function FooterAccount() {
   const { data: session, isPending } = useSession();
   const [isSigningOut, setIsSigningOut] = useState(false);
-  const [error, setError] = useState("");
   const user = session?.user;
 
   async function handleSignOut() {
-    setError("");
     setIsSigningOut(true);
 
     try {
       const { error: signOutError } = await authClient.signOut();
       if (signOutError) {
-        setError(signOutError.message ?? "Could not log out. Please try again.");
+        toast.error(signOutError.message ?? "Could not log out. Please try again.");
+        return;
       }
+      toast.success("Signed out successfully.");
     } catch {
-      setError("Could not log out. Please try again.");
+      toast.error("Could not log out. Please try again.");
     } finally {
       setIsSigningOut(false);
     }
@@ -69,11 +70,6 @@ export default function FooterAccount() {
       >
         {isSigningOut ? "Logging out..." : "Log out"}
       </button>
-      {error && (
-        <p role="alert" className="text-sm text-red-600">
-          {error}
-        </p>
-      )}
     </div>
   );
 }

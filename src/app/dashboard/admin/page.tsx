@@ -1,6 +1,6 @@
 "use client";
 
-import { Users, GraduationCap, ShieldCheck, DollarSign } from "lucide-react";
+import { Users, GraduationCap, ShieldCheck, DollarSign, CreditCard } from "lucide-react";
 import { StatsOverview } from "../ui";
 
 
@@ -15,6 +15,11 @@ export default function AdminOverview() {
       title="Admin overview"
       subtitle="Platform statistics."
       endpoint="/api/admin/stats"
+      actions={[
+        { icon: Users, label: "Manage users", href: "/dashboard/admin/users" },
+        { icon: ShieldCheck, label: "Review tuitions", href: "/dashboard/admin/tuitions" },
+        { icon: CreditCard, label: "View transactions", href: "/dashboard/admin/transactions" },
+      ]}
       cards={(statistics) => [
         { icon: Users, label: "Total users", value: statistics.totalUsers, note: "All registered accounts" },
         { icon: GraduationCap, label: "Total tutors", value: statistics.totalTutors, note: "Accounts with tutor role" },

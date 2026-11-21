@@ -36,7 +36,7 @@ export function HomepageStatistics({
     <div className="mx-auto mt-12 grid max-w-3xl grid-cols-3 rounded-2xl border border-gray-200 bg-white py-8 text-center">
       {statistics.map(({ label, value }) => (
         <div key={label}>
-          <p className="font-[family-name:var(--font-fraunces)] text-4xl font-bold text-[#1e2a78]">
+          <p className="font-(family-name:--font-fraunces) text-4xl font-bold text-[#1e2a78]">
             {value ?? "—"}
           </p>
           <p className="mt-1 text-sm text-slate-500">{label}</p>
@@ -52,7 +52,7 @@ export default function Subjects({ statistics }: { statistics: ReactNode }) {
       <div className="mx-auto max-w-6xl px-6">
         <div className="text-center">
           <p className="text-sm uppercase tracking-wide text-slate-600">Subjects</p>
-          <h2 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-bold text-[#101535]">
+          <h2 className="mt-2 font-(family-name:--font-fraunces) text-4xl font-bold text-[#101535]">
             Explore Top Subjects
           </h2>
           <p className="mt-3 text-slate-500">

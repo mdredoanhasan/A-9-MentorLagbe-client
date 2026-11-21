@@ -1,6 +1,8 @@
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
@@ -34,6 +36,7 @@ export function StatusBadge({ status }: { status: string }) {
 
 /* ---------- Stat card ---------- */
 export type StatCardProps = { icon: LucideIcon; label: string; value: string | number; note: string };
+export type OverviewAction = { icon: LucideIcon; label: string; href: string };
 
 export function StatCard({ icon: Icon, label, value, note }: StatCardProps) {
   return (
@@ -52,12 +55,13 @@ export function StatCard({ icon: Icon, label, value, note }: StatCardProps) {
 
 /* ---------- Overview page (used by all 3 roles) ---------- */
 export function StatsOverview<TStats>({
-  title, subtitle, endpoint, cards,
+  title, subtitle, endpoint, cards, actions,
 }: {
   title: string;
   subtitle: string;
   endpoint: string;
   cards: (statistics: TStats) => StatCardProps[];
+  actions: OverviewAction[];
 }) {
   const { data, loading, error } = useApi<TStats>(endpoint);
 
@@ -75,6 +79,23 @@ export function StatsOverview<TStats>({
               <StatCard key={statCard.label} {...statCard} />
             ))}
       </div>
+      <section className="space-y-3">
+        <h2 className={`${heading} text-xl`}>Quick actions</h2>
+        <div className="flex flex-wrap gap-3">
+            {actions.map(({ icon: Icon, label, href }) => (
+              <Button
+                key={label}
+                nativeButton={false}
+                render={<Link href={href} />}
+                variant="outline"
+                className="gap-2 border-[#e3e5f5] text-[#1e2a78] hover:bg-[#e6eafc]"
+              >
+                <Icon size={16} aria-hidden="true" />
+                {label}
+              </Button>
+            ))}
+        </div>
+      </section>
     </div>
   );
 }

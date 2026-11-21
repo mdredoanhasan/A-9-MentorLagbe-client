@@ -3,7 +3,27 @@
 import { authClient } from "@/app/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 import { FormEvent, useState } from "react";
+import { toast } from "sonner";
+
+function getSafeRedirectPath(callbackUrl: string | null, origin: string) {
+  if (
+    !callbackUrl ||
+    !callbackUrl.startsWith("/") ||
+    callbackUrl.startsWith("//")
+  ) {
+    return "/";
+  }
+
+  try {
+    const destination = new URL(callbackUrl, origin);
+    if (destination.origin !== origin) return "/";
+    return `${destination.pathname}${destination.search}${destination.hash}`;
+  } catch {
+    return "/";
+  }
+}
 
 export default function SignInPage() {
   const router = useRouter();
@@ -11,6 +31,7 @@ export default function SignInPage() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   function updateFormField(fieldName: string, value: string) {
     setForm((previousForm) => ({ ...previousForm, [fieldName]: value }));
@@ -22,21 +43,32 @@ export default function SignInPage() {
     setLoading(true);
 
     try {
-      const { data, error } = await authClient.signIn.email({
+      const { error } = await authClient.signIn.email({
         email: form.email,
         password: form.password,
       });
 
       if (error) {
-        setError(error.message ?? "Invalid email or password.");
+        const message = error.message ?? "Invalid email or password.";
+        setError(message);
+        toast.error(message);
         return;
       }
 
-      console.log(data);
-      router.push("/");
-      router.refresh(); // refresh server components so they see the new session
+      toast.success("Signed in successfully.");
+      const callbackUrl = new URLSearchParams(
+        window.location.search,
+      ).get("callbackUrl");
+      const redirectPath = getSafeRedirectPath(
+        callbackUrl,
+        window.location.origin,
+      );
+      router.replace(redirectPath);
+      router.refresh();
     } catch {
-      setError("Network error. Please try again.");
+      const message = "Network error. Please try again.";
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }
@@ -82,19 +114,34 @@ export default function SignInPage() {
             >
               Password
             </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              autoComplete="current-password"
-              value={form.password}
-              onChange={(event) =>
-                updateFormField("password", event.target.value)
-              }
-              placeholder="Your password"
-              className="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#1e2a78] text-black"
-            />
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={isPasswordVisible ? "text" : "password"}
+                required
+                autoComplete="current-password"
+                value={form.password}
+                onChange={(event) =>
+                  updateFormField("password", event.target.value)
+                }
+                placeholder="Your password"
+                className="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 pr-12 text-sm text-black outline-none focus:border-[#1e2a78]"
+              />
+              <button
+                type="button"
+                aria-label={isPasswordVisible ? "Hide password" : "Show password"}
+                aria-pressed={isPasswordVisible}
+                onClick={() => setIsPasswordVisible((visible) => !visible)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-slate-500 hover:text-[#1e2a78] focus-visible:outline-2 focus-visible:outline-[#1e2a78]"
+              >
+                {isPasswordVisible ? (
+                  <EyeOff size={18} aria-hidden="true" />
+                ) : (
+                  <Eye size={18} aria-hidden="true" />
+                )}
+              </button>
+            </div>
           </div>
 
           {error && (

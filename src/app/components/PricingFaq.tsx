@@ -6,7 +6,7 @@ import { useSession } from "@/app/lib/auth-client";
 const faqs = [
   {
     question: "Is MentorLagbe free to use?",
-    answer: "Yes. Students can browse and apply for free, and tutors can post up to 2 tuitions on the Free plan.",
+    answer: "Yes. Free students can browse and apply, and save up to 5 tuition bookmarks. Pro students can bookmark unlimited tuitions.",
   },
   {
     question: "How do I upgrade to Pro?",
@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     question: "Which plan is for me?",
-    answer: "Tutors choose Pro Tutor for unlimited tuition posts. Students choose Pro Student. A plan only works for the matching account type.",
+    answer: "Tutors choose Pro Tutor for unlimited tuition posts. Students choose Pro Student for unlimited tuition bookmarks; Free students can save up to 5.",
   },
 ];
 

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Camera } from "lucide-react";
 import { toast } from "sonner";
 import { authClient, useSession } from "@/app/lib/auth-client";
+import { RoleGuard } from "@/app/dashboard/RoleGuard";
 import { uploadToImgBB } from "@/app/lib/api";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -267,14 +268,15 @@ function ProfileEditor({ user }: { user: ProfileUser }) {
 }
 
 export default function UpdateProfilePage() {
-  const router = useRouter();
-  const { data: session, isPending } = useSession();
+  return (
+    <RoleGuard>
+      <ProfileContent />
+    </RoleGuard>
+  );
+}
 
-  useEffect(() => {
-    if (!isPending && !session?.user) {
-      router.replace("/sign-in");
-    }
-  }, [isPending, session, router]);
+function ProfileContent() {
+  const { data: session, isPending } = useSession();
 
   if (isPending) {
     return (

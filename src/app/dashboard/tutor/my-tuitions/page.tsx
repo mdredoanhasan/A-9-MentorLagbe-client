@@ -8,6 +8,7 @@ import { useApi } from "@/app/lib/use-api";
 import { TuitionForm, TuitionValues } from "../../TuitionForm";
 import { Tuition } from "@/components/type";
 import { PageHeader, SimpleTable, StatusBadge } from "../../ui";
+import { toast } from "sonner";
 
 
 export default function MyTuitions() {
@@ -34,6 +35,7 @@ export default function MyTuitions() {
     });
     setEditing(null);
     reload();
+    toast.success("Tuition updated.");
   }
 
   return (

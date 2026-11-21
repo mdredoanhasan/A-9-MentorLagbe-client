@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { authClient, useSession } from "@/app/lib/auth-client";
 import { normalizeUserRole } from "@/components/type";
+import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
   DropdownMenu,
@@ -28,7 +29,6 @@ export default function Navbar() {
   const pathname = usePathname();
   const { data: session, isPending } = useSession();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [signOutError, setSignOutError] = useState("");
   const [isSigningOut, setIsSigningOut] = useState(false);
 
   const user = session?.user;
@@ -36,22 +36,22 @@ export default function Navbar() {
   const userRole = normalizeUserRole(user?.role);
 
   async function handleSignOut() {
-    setSignOutError("");
     setIsSigningOut(true);
 
     try {
       const { error } = await authClient.signOut();
 
       if (error) {
-        setSignOutError(error.message ?? "Could not sign out. Please try again.");
+        toast.error(error.message ?? "Could not sign out. Please try again.");
         return;
       }
 
       setMenuOpen(false);
+      toast.success("Signed out successfully.");
       router.push("/");
       router.refresh();
     } catch {
-      setSignOutError("Could not sign out. Please try again.");
+      toast.error("Could not sign out. Please try again.");
     } finally {
       setIsSigningOut(false);
     }
@@ -136,11 +136,6 @@ export default function Navbar() {
 
                 <DropdownMenuSeparator />
 
-                {signOutError && (
-                  <p role="alert" className="px-3 py-1 text-sm text-red-600">
-                    {signOutError}
-                  </p>
-                )}
                 <DropdownMenuItem
                   variant="danger"
                   disabled={isSigningOut}

@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { RoleGuard } from "@/app/dashboard/RoleGuard";
 import CheckoutSuccess from "./success-content";
 
 type SuccessPageProps = {
@@ -7,13 +8,15 @@ type SuccessPageProps = {
 
 export default function SuccessPage({ searchParams }: SuccessPageProps) {
   return (
-    <Suspense fallback={<SuccessLoading />}>
-      {searchParams.then(({ session_id }) => (
-        <CheckoutSuccess
-          sessionId={Array.isArray(session_id) ? session_id[0] : session_id}
-        />
-      ))}
-    </Suspense>
+    <RoleGuard>
+      <Suspense fallback={<SuccessLoading />}>
+        {searchParams.then(({ session_id }) => (
+          <CheckoutSuccess
+            sessionId={Array.isArray(session_id) ? session_id[0] : session_id}
+          />
+        ))}
+      </Suspense>
+    </RoleGuard>
   );
 }
 

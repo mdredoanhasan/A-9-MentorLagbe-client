@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  LayoutDashboard, FileText, PlusCircle, BookOpen, Users, ShieldCheck, CreditCard, LogOut,
+  LayoutDashboard, FileText, PlusCircle, BookOpen, Users, ShieldCheck, CreditCard, LogOut, UserRound, Bookmark,
 } from "lucide-react";
 import { signOut } from "@/app/lib/auth-client";
+import { toast } from "sonner";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader,
@@ -18,6 +19,7 @@ const menuItemsByRole: Record<UserRole, SidebarNavItem[]> = {
   student: [
     { _id: "s1", name: "Overview", url: "/dashboard/student", icon: LayoutDashboard },
     { _id: "s2", name: "My Applications", url: "/dashboard/student/my-applications", icon: FileText },
+    { _id: "s3", name: "Saved Tuitions", url: "/dashboard/student/bookmarks", icon: Bookmark },
   ],
   tutor: [
     { _id: "t1", name: "Overview", url: "/dashboard/tutor", icon: LayoutDashboard },
@@ -33,6 +35,13 @@ const menuItemsByRole: Record<UserRole, SidebarNavItem[]> = {
   ],
 };
 
+const profileMenuItem: SidebarNavItem = {
+  _id: "profile",
+  name: "Update Profile",
+  url: "/profile",
+  icon: UserRound,
+};
+
 export function AppSidebar() {
   const { session, role } = useRole();
   const pathname = usePathname();
@@ -44,6 +53,21 @@ export function AppSidebar() {
     .slice(0, 2)
     .join("")
     .toUpperCase();
+
+  async function handleSignOut() {
+    try {
+      const { error } = await signOut();
+      if (error) {
+        toast.error(error.message ?? "Could not sign out. Please try again.");
+        return;
+      }
+
+      toast.success("Signed out successfully.");
+      router.push("/sign-in");
+    } catch {
+      toast.error("Could not sign out. Please try again.");
+    }
+  }
 
   return (
     <Sidebar collapsible="icon">
@@ -72,7 +96,7 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
-            {menuItemsByRole[role as keyof typeof menuItemsByRole].map((item) => (
+            {[...menuItemsByRole[role as keyof typeof menuItemsByRole], profileMenuItem].map((item) => (
               <SidebarMenuItem key={item._id}>
                 <SidebarMenuButton
                   isActive={pathname === item.url}
@@ -93,10 +117,7 @@ export function AppSidebar() {
           <SidebarMenuItem>
             <SidebarMenuButton
               tooltip="Sign out"
-              onClick={async () => {
-                await signOut();
-                router.push("/sign-in");
-              }}
+              onClick={handleSignOut}
             >
               <LogOut />
               <span>Sign out</span>
