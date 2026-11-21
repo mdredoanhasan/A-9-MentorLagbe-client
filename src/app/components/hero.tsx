@@ -81,7 +81,7 @@ export default function Hero() {
             </span>
             <span className="flex items-center gap-2">
               <GraduationCap size={16} className="text-[#1e2a78]" /> Online and
-              in-person tutors
+              Offline tutors
             </span>
             <span className="flex items-center gap-2">
               <Sparkles size={16} className="text-[#1e2a78]" /> Free to browse

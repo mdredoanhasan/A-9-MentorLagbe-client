@@ -321,7 +321,7 @@ function TuitionCard({ tuition }: { tuition: Tuition }) {
             aria-hidden="true"
             className={`h-2 w-2 rounded-full ${isOnline ? "bg-green-600" : "bg-amber-500"}`}
           />
-          <span className="capitalize">{tuition.mode}</span>
+          <span>{tuition.mode === "in-person" ? "Offline" : tuition.mode}</span>
         </span>
 
         <p className={`${serif} absolute bottom-4 left-5 right-5 truncate text-2xl text-white`}>
