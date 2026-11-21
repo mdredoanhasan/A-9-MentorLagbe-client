@@ -28,12 +28,12 @@ export default function Footer() {
         <div>
           <Link
             href="/"
-            className="font-[family-name:var(--font-fraunces)] text-2xl font-bold"
+            className="font-(family-name:--font-fraunces) text-2xl font-bold"
           >
             <span className="text-[#1e2a78]">Mentor</span>
             <span className="text-amber-500">Lagbe</span>
           </Link>
-          <p className="mt-2 max-w-[17rem] text-slate-500">
+          <p className="mt-2 max-w-68 text-slate-500">
             Find the right tutor or the right student, with approvals and plans
             you can trust.
           </p>

@@ -129,7 +129,7 @@ function ProfileEditor({ user }: { user: ProfileUser }) {
           <p className="text-sm font-semibold uppercase tracking-wide text-[#1e2a78]">
             Account settings
           </p>
-          <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-3xl font-bold text-[#101535] sm:text-4xl">
+          <h1 className="mt-2 font-(family-name:--font-fraunces) text-3xl font-bold text-[#101535] sm:text-4xl">
             Update profile
           </h1>
         </div>

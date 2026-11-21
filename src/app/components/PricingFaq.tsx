@@ -52,14 +52,14 @@ export default function PricingFaq() {
   return (
     <section className="bg-[#f0ede4] py-20">
       <div className="mx-auto max-w-4xl px-6">
-        <h2 className="text-center font-[family-name:var(--font-fraunces)] text-4xl font-bold text-[#101535]">
+        <h2 className="text-center font-(family-name:--font-fraunces) text-4xl font-bold text-[#101535]">
           Pricing Questions
         </h2>
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {faqs.map(({ question, answer }) => (
             <div key={question} className="rounded-2xl border border-gray-200 bg-white p-6">
-              <h3 className="font-[family-name:var(--font-fraunces)] text-lg font-bold leading-snug text-[#101535]">
+              <h3 className="font-(family-name:--font-fraunces) text-lg font-bold leading-snug text-[#101535]">
                 {question}
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-slate-500">{answer}</p>

@@ -78,7 +78,7 @@ export default function CheckoutSuccess({
         {displayedVerification.status === "loading" ? (
           <>
             <div className="mx-auto size-14 animate-pulse rounded-full bg-[#e8eafb]" />
-            <h1 className="mt-5 font-[family-name:var(--font-fraunces)] text-3xl font-bold text-[#101535]">
+            <h1 className="mt-5 font-(family-name:--font-fraunces) text-3xl font-bold text-[#101535]">
               Confirming your payment
             </h1>
             <p className="mt-3 text-slate-500">
@@ -90,7 +90,7 @@ export default function CheckoutSuccess({
             <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-50 text-2xl font-bold text-emerald-700">
               ✓
             </span>
-            <h1 className="mt-5 font-[family-name:var(--font-fraunces)] text-3xl font-bold text-[#101535]">
+            <h1 className="mt-5 font-(family-name:--font-fraunces) text-3xl font-bold text-[#101535]">
               You are now on Pro
             </h1>
             <p className="mt-3 text-slate-600">
@@ -110,7 +110,7 @@ export default function CheckoutSuccess({
             <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-amber-50 text-2xl font-bold text-amber-700">
               !
             </span>
-            <h1 className="mt-5 font-[family-name:var(--font-fraunces)] text-3xl font-bold text-[#101535]">
+            <h1 className="mt-5 font-(family-name:--font-fraunces) text-3xl font-bold text-[#101535]">
               Payment not confirmed yet
             </h1>
             <p role="alert" className="mt-3 text-slate-600">

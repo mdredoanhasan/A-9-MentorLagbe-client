@@ -34,7 +34,7 @@ export default function HowItWorks() {
         {/* Heading */}
         <div className="text-center">
           <p className="text-sm uppercase tracking-wide text-slate-600">How it works</p>
-          <h2 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-bold text-[#101535]">
+          <h2 className="mt-2 font-(family-name:--font-fraunces) text-4xl font-bold text-[#101535]">
             How MentorLagbe Works
           </h2>
           <p className="mt-3 text-slate-500">
@@ -45,7 +45,7 @@ export default function HowItWorks() {
         {/* Groups */}
         {groups.map((group) => (
           <div key={group.heading} className="mt-16">
-            <h3 className="text-center font-[family-name:var(--font-fraunces)] text-2xl font-bold text-[#101535]">
+            <h3 className="text-center font-(family-name:--font-fraunces) text-2xl font-bold text-[#101535]">
               {group.heading}
             </h3>
 
@@ -58,7 +58,7 @@ export default function HowItWorks() {
                       {stepIndex + 1}
                     </span>
                   </div>
-                  <h4 className="mt-4 font-[family-name:var(--font-fraunces)] text-lg font-bold text-[#101535]">
+                  <h4 className="mt-4 font-(family-name:--font-fraunces) text-lg font-bold text-[#101535]">
                     {title}
                   </h4>
                   <p className="mx-auto mt-2 max-w-[16rem] text-sm leading-relaxed text-slate-500">

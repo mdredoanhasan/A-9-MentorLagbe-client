@@ -122,7 +122,7 @@ export default function TuitionDetails({ tuitionId }: { tuitionId: string }) {
     return (
       <main className="min-h-[65vh] bg-[#faf8f4] px-6 py-16">
         <div className="mx-auto max-w-2xl rounded-3xl border border-[#e3e5f5] bg-white p-8 text-center shadow-sm">
-          <h1 className="font-[family-name:var(--font-fraunces)] text-3xl font-bold text-[#101535]">
+          <h1 className="font-(family-name:--font-fraunces) text-3xl font-bold text-[#101535]">
             Tuition not available
           </h1>
           <p className="mt-3 text-slate-500">
@@ -177,16 +177,16 @@ export default function TuitionDetails({ tuitionId }: { tuitionId: string }) {
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#1e2a78] to-[#3b4aa8]">
+                <div className="absolute inset-0 flex items-center justify-center bg-linear-to-br from-[#1e2a78] to-[#3b4aa8]">
                   <BookOpen size={72} className="text-white/40" aria-hidden="true" />
                 </div>
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#101535]/80 via-[#101535]/10 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-[#101535]/80 via-[#101535]/10 to-transparent" />
               <div className="absolute inset-x-6 bottom-6 sm:inset-x-8 sm:bottom-8">
                 <span className="inline-flex rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-[#1e2a78]">
                   {tuition.subject}
                 </span>
-                <h1 className="mt-3 max-w-3xl font-[family-name:var(--font-fraunces)] text-3xl font-bold leading-tight text-white sm:text-4xl">
+                <h1 className="mt-3 max-w-3xl font-(family-name:--font-fraunces) text-3xl font-bold leading-tight text-white sm:text-4xl">
                   {tuition.title}
                 </h1>
               </div>
@@ -205,7 +205,7 @@ export default function TuitionDetails({ tuitionId }: { tuitionId: string }) {
               <section aria-labelledby="tuition-details-heading">
                 <h2
                   id="tuition-details-heading"
-                  className="font-[family-name:var(--font-fraunces)] text-2xl font-bold text-[#101535]"
+                  className="font-(family-name:--font-fraunces) text-2xl font-bold text-[#101535]"
                 >
                   Tuition details
                 </h2>
@@ -236,7 +236,7 @@ export default function TuitionDetails({ tuitionId }: { tuitionId: string }) {
               <section aria-labelledby="description-heading">
                 <h2
                   id="description-heading"
-                  className="font-[family-name:var(--font-fraunces)] text-2xl font-bold text-[#101535]"
+                  className="font-(family-name:--font-fraunces) text-2xl font-bold text-[#101535]"
                 >
                   About this tuition
                 </h2>
@@ -431,7 +431,7 @@ function DetailFact({
       </span>
       <div className="min-w-0">
         <p className="text-xs font-medium text-slate-500">{label}</p>
-        <p className="mt-1 break-words text-sm font-semibold text-[#101535]">
+        <p className="mt-1 wrap-break-word text-sm font-semibold text-[#101535]">
           {value}
         </p>
       </div>
@@ -448,7 +448,7 @@ export function TuitionDetailsSkeleton() {
       <div className="mx-auto max-w-6xl">
         <div className="h-5 w-36 animate-pulse rounded bg-[#e3e5f5]" />
         <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
-          <div className="h-[620px] animate-pulse rounded-3xl border border-[#e3e5f5] bg-white" />
+          <div className="h-155 animate-pulse rounded-3xl border border-[#e3e5f5] bg-white" />
           <div className="h-72 animate-pulse rounded-3xl border border-[#e3e5f5] bg-white" />
         </div>
       </div>

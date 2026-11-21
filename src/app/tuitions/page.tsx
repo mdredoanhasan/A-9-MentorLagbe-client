@@ -287,7 +287,7 @@ function TuitionCard({ tuition }: { tuition: Tuition }) {
     <article className="flex h-full flex-col overflow-hidden rounded-[20px] border border-[#e3e5f5] bg-white shadow-lg shadow-[#1e2a78]/5 transition duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#1e2a78]/10">
       {/* Banner */}
       <div
-        className="relative h-[150px] shrink-0 overflow-hidden"
+        className="relative h-37.5 shrink-0 overflow-hidden"
         style={{ backgroundColor: subjectColor(tuition.subject) }}
       >
         {tuition.bannerUrl ? (
@@ -300,7 +300,7 @@ function TuitionCard({ tuition }: { tuition: Tuition }) {
             />
             <span
               aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"
+              className="absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent"
             />
           </>
         ) : (
@@ -510,7 +510,7 @@ function LoadingSkeleton() {
         <div className="mt-8 h-20 animate-pulse rounded-3xl bg-white" />
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-[468px] animate-pulse rounded-[20px] bg-white" />
+            <div key={i} className="h-117 animate-pulse rounded-[20px] bg-white" />
           ))}
         </div>
       </div>
