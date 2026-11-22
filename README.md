@@ -1,60 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MentorLagbe (Client)
 
-## Getting Started
+MentorLagbe is a smart tuition and mentorship platform. Students find verified tutors by subject, class level and mode (online or offline). Tutors post tuition batches and manage applications. Admins review every listing before it goes public.
 
-First, run the development server:
+This repository is the **Next.js client**. The Express API lives in a separate repository (see Links).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Purpose
+
+Students and parents struggle to find reliable tutors by subject, class level, mode and budget, while skilled tutors lack a simple place to show their batches and manage enrollments. MentorLagbe solves both problems in one place.
+
+## Links
+
+| What | Link |
+|---|---|
+| Live site | https://mentor-lagbe-client-beta.vercel.app/ |
+| Client repository | https://github.com/mdredoanhasan/A-9-MentorLagbe-client |
+| Server repository | https://github.com/mdredoanhasan/A-9-MentorLagbe-Server |
+| Live API | https://mentor-lagbe-server-chi.vercel.app |
+
+## Test Accounts
+
+| Role | Email | Password |
+|---|---|---|
+| Admin | `<add admin email>` | `<add admin password>` |
+| Tutor | `<add tutor email>` | `<add tutor password>` |
+| Student | `<add student email>` | `<add student password>` |
+
+## Key Features
+
+**Public**
+- Landing page with banner and featured tuitions
+- Browse Tuitions page with server-side search (title or subject), filters (subject, class level, mode) and pagination
+- Tuition details page
+- Custom 404 and error pages
+
+**Authentication**
+- Sign up with full name, email, password and role (Student or Tutor)
+- Sign in with email and password
+- Session handling with Better Auth and MongoDB
+- Role-based route protection. A user who opens another role's page is sent to an Unauthorized page
+- Reloading a private page keeps the user signed in
+
+**Student**
+- Apply to an approved tuition (one application per tuition)
+- Track application status (pending, accepted, rejected)
+- Cancel a pending application
+
+**Tutor**
+- Post a tuition with a banner image (new posts start as pending)
+- Free plan tutors can post up to 2 tuitions
+- Edit, delete and open or close their tuitions
+- See applicants and accept or reject them
+
+**Admin**
+- Platform statistics
+- User list and role management
+- Approve or reject tuition posts
+- View payment transactions
+
+## Tech Stack
+
+- Next.js (App Router) and React
+- TypeScript
+- Tailwind CSS
+- Better Auth with the MongoDB adapter
+- MongoDB
+- Deployed on Vercel
+
+## npm Packages Used
+
+- `next`
+- `react` and `react-dom`
+- `typescript`
+- `tailwindcss`
+- `better-auth`
+- `@better-auth/mongo-adapter`
+- `mongodb`
+- `lucide-react`
+- `@radix-ui/react-dropdown-menu`
+
+## Environment Variables
+
+Create a `.env.local` file in the project root. Never commit it.
+
+```env
+BETTER_AUTH_SECRET=
+BETTER_AUTH_URL=
+MONGODB_URI=
+NEXT_PUBLIC_API_URL=
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Run Locally
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+git clone https://github.com/mdredoanhasan/A-9-MentorLagbe-client.git
+cd A-9-MentorLagbe-client
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open http://localhost:3000. The API server must also be running (see the server repository).
 
-## Stripe Pro checkout
+## Build
 
-The Pro Tutor and Pro Student plans use separate one-time Stripe Checkout prices.
-The checkout route selects the matching price from the signed-in user's role; a
-payment is verified with Stripe before the user's `plan` is changed to `pro`.
-Successful payments are also saved to MongoDB's `payments` collection.
+```bash
+npm run build
+npm start
+```
 
-Copy the Stripe values from `.env.example` into `.env`. Set `STRIPE_SECRET_KEY`
-and configure `STRIPE_WEBHOOK_SECRET` from Stripe. To test webhooks locally, run
-`stripe listen --forward-to localhost:3000/api/stripe/webhook` and use the
-signing secret printed by Stripe CLI. Subscribe the webhook to
-`checkout.session.completed` and `checkout.session.async_payment_succeeded`.
-The existing Pro price IDs are used by default; set `STRIPE_TUTOR_PRO_PRICE_ID`
-and `STRIPE_STUDENT_PRO_PRICE_ID` to override them. The old
-`STRIPE_MENTOR_PRO_PRICE_ID` name remains supported for compatibility.
+## Author
 
-The success page also verifies the Checkout Session, so Pro is activated when
-the customer returns. The webhook covers payments where they do not return.
-Stripe-hosted Checkout does not need the publishable key in the browser.
-
-The app now uses `tutor` as the account role and route name. Existing accounts
-and records that still use `mentor` remain supported; old mentor dashboard URLs
-redirect to the tutor dashboard.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Redoan Hasan
+GitHub: https://github.com/mdredoanhasan
