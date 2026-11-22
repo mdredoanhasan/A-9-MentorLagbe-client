@@ -95,10 +95,12 @@ export function BookmarkProvider({ children }: { children: ReactNode }) {
           return;
         }
 
-        await api("/api/student/bookmarks", {
-          method: "POST",
-          body: JSON.stringify({ tuitionId }),
-        });
+        await api(
+          `/api/student/bookmarks/${encodeURIComponent(tuitionId)}`,
+          {
+            method: "POST",
+          },
+        );
         setBookmarkState((currentState) => ({
           userId,
           ids: new Set(
