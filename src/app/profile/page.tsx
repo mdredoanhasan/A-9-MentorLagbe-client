@@ -26,6 +26,13 @@ type ProfileUser = {
   bio?: string;
 };
 
+// Explicit colors so the fields look the same in light and dark mode.
+const inputClass =
+  "mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-[#101535] outline-none placeholder:text-slate-400 focus:border-[#1e2a78] focus:ring-2 focus:ring-[#1e2a78]";
+const labelClass = "text-sm font-medium text-[#101535]";
+const outlineButtonClass =
+  "border-[#1e2a78] bg-white text-[#1e2a78] hover:bg-[#e8eafb] hover:text-[#1e2a78]";
+
 function ProfileEditor({ user }: { user: ProfileUser }) {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -38,6 +45,8 @@ function ProfileEditor({ user }: { user: ProfileUser }) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+
+  // Free the temporary preview URL when it changes or the page closes.
   useEffect(() => {
     return () => {
       if (imagePreview) URL.revokeObjectURL(imagePreview);
@@ -71,9 +80,19 @@ function ProfileEditor({ user }: { user: ProfileUser }) {
     setImageFile(file);
   }
 
+  function removePhoto() {
+    setImagePreview("");
+    setProfile((currentProfile) => ({ ...currentProfile, image: "" }));
+    setImageFile(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
+
   async function saveProfile(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const name = profile.name.trim();
+    const phone = profile.phone.trim();
+    const bio = profile.bio.trim();
+
     if (!name) {
       toast.error("Name is required.");
       return;
@@ -89,21 +108,15 @@ function ProfileEditor({ user }: { user: ProfileUser }) {
       const { error } = await authClient.updateUser({
         name,
         image: image || null,
-        phone: profile.phone.trim(),
-        bio: profile.bio.trim(),
+        phone,
+        bio,
       });
       if (error) {
         toast.error(error.message ?? "Could not update your profile.");
         return;
       }
 
-      setProfile((currentProfile) => ({
-        ...currentProfile,
-        name,
-        phone: profile.phone.trim(),
-        bio: profile.bio.trim(),
-        image,
-      }));
+      setProfile({ name, phone, bio, image });
       setImageFile(null);
       await authClient.getSession();
       router.refresh();
@@ -119,12 +132,11 @@ function ProfileEditor({ user }: { user: ProfileUser }) {
     }
   }
 
-  const userInitial =
-    profile.name.trim().charAt(0).toUpperCase() || "U";
+  const userInitial = profile.name.trim().charAt(0).toUpperCase() || "U";
   const displayedImage = imagePreview || profile.image || undefined;
 
   return (
-    <main className="min-h-[65vh] bg-[#faf8f4] px-6 py-10 sm:py-14">
+    <main className="min-h-[65vh] bg-[#faf8f4] px-6 py-10 [color-scheme:light] sm:py-14">
       <div className="mx-auto max-w-3xl">
         <div>
           <p className="text-sm font-semibold uppercase tracking-wide text-[#1e2a78]">
@@ -137,7 +149,7 @@ function ProfileEditor({ user }: { user: ProfileUser }) {
 
         <form
           onSubmit={saveProfile}
-          className="mt-8 grid gap-8 rounded-3xl border border-[#e3e5f5] bg-white p-6 shadow-sm sm:p-8 md:grid-cols-[180px_minmax(0,1fr)]"
+          className="mt-8 grid gap-8 rounded-3xl border border-[#e3e5f5] bg-white p-6 text-[#101535] shadow-sm sm:p-8 md:grid-cols-[180px_minmax(0,1fr)]"
         >
           <div className="flex flex-col items-center">
             <Avatar className="size-32 border-4 border-white shadow-md">
@@ -157,25 +169,18 @@ function ProfileEditor({ user }: { user: ProfileUser }) {
             <Button
               type="button"
               variant="outline"
-              className="mt-4"
+              className={`mt-4 ${outlineButtonClass}`}
               onClick={() => fileInputRef.current?.click()}
             >
               <Camera aria-hidden="true" />
               {profile.image || imageFile ? "Change photo" : "Add photo"}
             </Button>
-            {profile.image && (
+
+            {(profile.image || imageFile) && (
               <button
                 type="button"
-                onClick={() => {
-                  if (imagePreview) URL.revokeObjectURL(imagePreview);
-                  setImagePreview("");
-                  setProfile((currentProfile) => ({
-                    ...currentProfile,
-                    image: "",
-                  }));
-                  setImageFile(null);
-                }}
-                className="mt-2 text-sm text-red-600 hover:underline"
+                onClick={removePhoto}
+                className="mt-2 text-sm font-medium text-red-600 hover:underline"
               >
                 Remove photo
               </button>
@@ -184,7 +189,7 @@ function ProfileEditor({ user }: { user: ProfileUser }) {
 
           <div className="space-y-5">
             <div>
-              <label htmlFor="profile-name" className="text-sm font-medium text-[#101535]">
+              <label htmlFor="profile-name" className={labelClass}>
                 Full name
               </label>
               <input
@@ -194,12 +199,12 @@ function ProfileEditor({ user }: { user: ProfileUser }) {
                 maxLength={80}
                 value={profile.name}
                 onChange={(event) => updateField("name", event.target.value)}
-                className="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#1e2a78] focus:ring-2 focus:ring-[#1e2a78]"
+                className={inputClass}
               />
             </div>
 
             <div>
-              <label htmlFor="profile-email" className="text-sm font-medium text-[#101535]">
+              <label htmlFor="profile-email" className={labelClass}>
                 Email
               </label>
               <input
@@ -212,7 +217,7 @@ function ProfileEditor({ user }: { user: ProfileUser }) {
             </div>
 
             <div>
-              <label htmlFor="profile-phone" className="text-sm font-medium text-[#101535]">
+              <label htmlFor="profile-phone" className={labelClass}>
                 Phone number
               </label>
               <input
@@ -222,12 +227,12 @@ function ProfileEditor({ user }: { user: ProfileUser }) {
                 value={profile.phone}
                 onChange={(event) => updateField("phone", event.target.value)}
                 placeholder="+880 1XXXXXXXXX"
-                className="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#1e2a78] focus:ring-2 focus:ring-[#1e2a78]"
+                className={inputClass}
               />
             </div>
 
             <div>
-              <label htmlFor="profile-bio" className="text-sm font-medium text-[#101535]">
+              <label htmlFor="profile-bio" className={labelClass}>
                 Bio
               </label>
               <textarea
@@ -237,7 +242,7 @@ function ProfileEditor({ user }: { user: ProfileUser }) {
                 value={profile.bio}
                 onChange={(event) => updateField("bio", event.target.value)}
                 placeholder="Tell students or tutors a little about yourself..."
-                className="mt-1.5 w-full resize-y rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-[#1e2a78] focus:ring-2 focus:ring-[#1e2a78]"
+                className={`${inputClass} resize-y`}
               />
               <p className="mt-1 text-right text-xs text-slate-400">
                 {profile.bio.length}/500
@@ -255,6 +260,7 @@ function ProfileEditor({ user }: { user: ProfileUser }) {
               <Button
                 type="button"
                 variant="outline"
+                className={outlineButtonClass}
                 onClick={() => router.back()}
               >
                 Cancel
