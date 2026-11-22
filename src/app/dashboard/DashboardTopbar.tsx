@@ -24,8 +24,8 @@ export function DashboardTopbar() {
       : currentRouteSegment.replace(/-/g, " ");
 
   return (
-    <header className="sticky top-0 z-10 flex h-16 items-center gap-3 border-b border-gray-200 bg-white px-4">
-      <SidebarTrigger />
+    <header className="sticky top-0 z-10 flex h-16 items-center gap-3 border-b border-[#e3e5f5] bg-[#faf8f4] px-4">
+      <SidebarTrigger className="text-[#1e2a78] hover:bg-[#e6eafc]" />
       <Separator orientation="vertical" className="h-5" />
       <h2 className="text-sm font-medium capitalize text-slate-500">{title}</h2>
 

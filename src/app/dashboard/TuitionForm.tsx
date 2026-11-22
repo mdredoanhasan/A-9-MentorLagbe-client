@@ -7,6 +7,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { uploadToImgBB } from "@/app/lib/api";
+import {
+  dashboardFormControl,
+  dashboardPrimaryButton,
+} from "./ui";
 
 export type TuitionValues = {
   title: string;
@@ -54,7 +58,7 @@ function validateTuition(
 function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
-      <Label>{label}</Label>
+      <Label className="text-[#101535] dark:text-[#101535]">{label}</Label>
       {children}
       {error && <p className="text-sm text-red-600">{error}</p>}
     </div>
@@ -107,45 +111,46 @@ export function TuitionForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-5 md:grid-cols-2">
+    <form onSubmit={handleSubmit} className="grid gap-5 text-[#101535] md:grid-cols-2">
       <div className="md:col-span-2">
         <Field label="Title" error={fieldErrors.title}>
-          <Input value={values.title} onChange={createChangeHandler("title")} placeholder="e.g. HSC Physics Batch" />
+          <Input className={dashboardFormControl} value={values.title} onChange={createChangeHandler("title")} placeholder="e.g. HSC Physics Batch" />
         </Field>
       </div>
       <Field label="Subject" error={fieldErrors.subject}>
-        <Input value={values.subject} onChange={createChangeHandler("subject")} placeholder="Physics" />
+        <Input className={dashboardFormControl} value={values.subject} onChange={createChangeHandler("subject")} placeholder="Physics" />
       </Field>
       <Field label="Class level" error={fieldErrors.classLevel}>
-        <Input value={values.classLevel} onChange={createChangeHandler("classLevel")} placeholder="Class 11–12" />
+        <Input className={dashboardFormControl} value={values.classLevel} onChange={createChangeHandler("classLevel")} placeholder="Class 11–12" />
       </Field>
       <Field label="Mode">
         <select
           value={values.mode}
           onChange={createChangeHandler("mode")}
-          className="h-9 w-full rounded-md border border-gray-200 bg-white px-3 text-sm"
+          className="h-9 w-full rounded-md border border-[#e3e5f5] bg-white px-3 text-sm text-[#101535] outline-none focus-visible:ring-2 focus-visible:ring-[#1e2a78] dark:bg-white dark:text-[#101535]"
         >
           <option value="online">Online</option>
           <option value="in-person">Offline</option>
         </select>
       </Field>
       <Field label="Location" error={fieldErrors.location}>
-        <Input value={values.location} onChange={createChangeHandler("location")} placeholder="Dhaka, Mirpur" />
+        <Input className={dashboardFormControl} value={values.location} onChange={createChangeHandler("location")} placeholder="Dhaka, Mirpur" />
       </Field>
       <Field label="Monthly fee (৳)" error={fieldErrors.monthlyFee}>
-        <Input type="number" min={0} value={values.monthlyFee} onChange={createChangeHandler("monthlyFee")} />
+        <Input className={dashboardFormControl} type="number" min={0} value={values.monthlyFee} onChange={createChangeHandler("monthlyFee")} />
       </Field>
       <Field label="Days per week" error={fieldErrors.daysPerWeek}>
-        <Input type="number" min={1} max={7} value={values.daysPerWeek} onChange={createChangeHandler("daysPerWeek")} />
+        <Input className={dashboardFormControl} type="number" min={1} max={7} value={values.daysPerWeek} onChange={createChangeHandler("daysPerWeek")} />
       </Field>
       <div className="md:col-span-2">
         <Field label="Description" error={fieldErrors.description}>
-          <Textarea rows={4} value={values.description} onChange={createChangeHandler("description")} />
+          <Textarea className={dashboardFormControl} rows={4} value={values.description} onChange={createChangeHandler("description")} />
         </Field>
       </div>
       <div className="md:col-span-2">
         <Field label="Banner image" error={fieldErrors.banner}>
           <Input
+            className={dashboardFormControl}
             type="file"
             accept="image/*"
             onChange={(event) =>
@@ -161,7 +166,7 @@ export function TuitionForm({
         <Button
           type="submit"
           disabled={isSaving || disabled}
-          className="bg-[#1e2a78] text-white hover:bg-[#161f5c]"
+          className={dashboardPrimaryButton}
         >
           {isSaving ? "Saving…" : submitLabel}
         </Button>

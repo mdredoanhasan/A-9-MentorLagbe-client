@@ -10,6 +10,14 @@ import {
 import { useApi } from "@/app/lib/use-api";
 
 export const heading = "font-[family-name:var(--font-fraunces)] font-bold text-[#101535]";
+export const dashboardPrimaryButton =
+  "bg-[#1e2a78] text-white hover:bg-[#161f5c] dark:bg-[#1e2a78] dark:text-white dark:hover:bg-[#161f5c]";
+export const dashboardOutlineButton =
+  "border-[#e3e5f5] bg-white text-[#1e2a78] hover:bg-[#e6eafc] dark:border-[#e3e5f5] dark:bg-white dark:text-[#1e2a78] dark:hover:bg-[#e6eafc]";
+export const dashboardDestructiveButton =
+  "border-red-200 bg-white text-red-600 hover:bg-red-50 dark:border-red-200 dark:bg-white dark:text-red-600 dark:hover:bg-red-50";
+export const dashboardFormControl =
+  "border-[#e3e5f5] bg-white text-[#101535] placeholder:text-slate-400 focus-visible:border-[#1e2a78] focus-visible:ring-[#1e2a78]/40 dark:bg-white dark:text-[#101535] dark:disabled:bg-white";
 
 export function PageHeader({ title, subtitle }: { title: string; subtitle?: string }) {
   return (
@@ -40,7 +48,7 @@ export type OverviewAction = { icon: LucideIcon; label: string; href: string };
 
 export function StatCard({ icon: Icon, label, value, note }: StatCardProps) {
   return (
-    <Card className="border-gray-200 shadow-none">
+    <Card className="rounded-2xl border-[#e3e5f5] bg-white text-[#101535] shadow-sm ring-0 dark:bg-white dark:text-[#101535]">
       <CardContent className="p-5">
         <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#e6eafc] text-[#1e2a78]">
           <Icon size={18} />
@@ -66,13 +74,17 @@ export function StatsOverview<TStats>({
   const { data, loading, error } = useApi<TStats>(endpoint);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-[#101535]">
       <PageHeader title={title} subtitle={subtitle} />
-      {error && <p className="text-red-600">{error}</p>}
+      {error && (
+        <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {error}
+        </p>
+      )}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {loading
           ? Array.from({ length: 4 }).map((_, skeletonIndex) => (
-              <div key={skeletonIndex} className="h-40 animate-pulse rounded-xl bg-gray-200" />
+              <div key={skeletonIndex} className="h-40 animate-pulse rounded-2xl bg-[#e6eafc]" />
             ))
           : data &&
             cards(data).map((statCard) => (
@@ -88,7 +100,7 @@ export function StatsOverview<TStats>({
                 nativeButton={false}
                 render={<Link href={href} />}
                 variant="outline"
-                className="gap-2 border-[#e3e5f5] text-[#1e2a78] hover:bg-[#e6eafc]"
+                className={`gap-2 ${dashboardOutlineButton}`}
               >
                 <Icon size={16} aria-hidden="true" />
                 {label}
@@ -116,25 +128,30 @@ export function SimpleTable<TRecord extends { _id: string }>({
 }) {
   const tableRows = rows ?? [];
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white">
+    <div className="rounded-2xl border border-[#e3e5f5] bg-white text-[#101535] shadow-sm dark:bg-white dark:text-[#101535]">
       <Table>
-        <TableHeader>
-          <TableRow>
+        <TableHeader className="bg-[#faf8f4]">
+          <TableRow className="border-[#e3e5f5] hover:bg-transparent">
             {columns.map((column) => (
-              <TableHead key={column.header}>{column.header}</TableHead>
+              <TableHead
+                key={column.header}
+                className="text-xs font-semibold uppercase tracking-wide text-slate-500"
+              >
+                {column.header}
+              </TableHead>
             ))}
           </TableRow>
         </TableHeader>
         <TableBody>
           {loading || tableRows.length === 0 ? (
-            <TableRow>
+            <TableRow className="border-[#e3e5f5] hover:bg-transparent">
               <TableCell colSpan={columns.length} className="py-10 text-center text-slate-500">
                 {loading ? "Loading…" : empty}
               </TableCell>
             </TableRow>
           ) : (
             tableRows.map((record) => (
-              <TableRow key={record._id}>
+              <TableRow key={record._id} className="border-[#e3e5f5] hover:bg-[#faf8f4]">
                 {columns.map((column) => (
                   <TableCell key={column.header}>
                     {column.cell(record)}

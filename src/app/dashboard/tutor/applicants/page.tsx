@@ -3,7 +3,13 @@
 import { Button } from "@/components/ui/button";
 import { api, runAction } from "@/app/lib/api";
 import { useApi } from "@/app/lib/use-api";
-import { PageHeader, SimpleTable, StatusBadge } from "../../ui";
+import {
+  dashboardOutlineButton,
+  dashboardPrimaryButton,
+  PageHeader,
+  SimpleTable,
+  StatusBadge,
+} from "../../ui";
 import { Application } from "@/components/type";
 
 
@@ -36,10 +42,10 @@ export default function Applicants() {
             cell: (application) =>
               application.status === "pending" ? (
                 <div className="flex gap-2">
-                  <Button size="sm" className="bg-[#1e2a78] text-white" onClick={() => setStatus(application._id, "accepted")}>
+                  <Button size="sm" className={dashboardPrimaryButton} onClick={() => setStatus(application._id, "accepted")}>
                     Accept
                   </Button>
-                  <Button size="sm" variant="outline" onClick={() => setStatus(application._id, "rejected")}>
+                  <Button size="sm" variant="outline" className={dashboardOutlineButton} onClick={() => setStatus(application._id, "rejected")}>
                     Reject
                   </Button>
                 </div>

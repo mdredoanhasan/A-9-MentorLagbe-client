@@ -36,7 +36,7 @@ export default function UsersPage() {
                 onChange={(event) =>
                   changeRole(user._id, event.target.value as UserRole)
                 }
-                className="h-9 rounded-md border border-gray-200 bg-white px-2 text-sm capitalize disabled:opacity-50"
+                className="h-9 rounded-md border border-[#e3e5f5] bg-white px-2 text-sm capitalize text-[#101535] outline-none focus-visible:ring-2 focus-visible:ring-[#1e2a78] disabled:opacity-50 dark:bg-white dark:text-[#101535]"
               >
                 <option value="student">Student</option>
                 <option value="tutor">Tutor</option>

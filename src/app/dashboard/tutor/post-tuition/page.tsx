@@ -35,7 +35,7 @@ export default function PostTuition() {
       <PageHeader title="Post a tuition" subtitle="Admins review every listing before it goes public." />
 
       {limitReached && (
-        <div className="rounded-xl bg-amber-50 p-4 text-sm text-slate-700">
+        <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-slate-700">
           Free plan tutors can post up to 2 tuitions.{" "}
           <Link href="/#pricing" className="font-semibold text-[#1e2a78] underline">
             Upgrade to Pro
@@ -44,7 +44,7 @@ export default function PostTuition() {
         </div>
       )}
 
-      <div className="rounded-2xl border border-gray-200 bg-white p-6">
+      <div className="rounded-2xl border border-[#e3e5f5] bg-white p-6 dark:bg-white">
         <TuitionForm submitLabel="Submit for approval" disabled={loading || limitReached} onSubmit={create} />
       </div>
     </div>

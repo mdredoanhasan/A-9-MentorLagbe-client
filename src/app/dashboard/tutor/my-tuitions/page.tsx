@@ -7,7 +7,13 @@ import { api, runAction } from "@/app/lib/api";
 import { useApi } from "@/app/lib/use-api";
 import { TuitionForm, TuitionValues } from "../../TuitionForm";
 import { Tuition } from "@/components/type";
-import { PageHeader, SimpleTable, StatusBadge } from "../../ui";
+import {
+  dashboardDestructiveButton,
+  dashboardOutlineButton,
+  PageHeader,
+  SimpleTable,
+  StatusBadge,
+} from "../../ui";
 import { toast } from "sonner";
 
 
@@ -56,17 +62,18 @@ export default function MyTuitions() {
             header: "Actions",
             cell: (tuition) => (
               <div className="flex flex-wrap gap-2">
-                <Button size="sm" variant="outline" onClick={() => setEditing(tuition)}>Edit</Button>
+                <Button size="sm" variant="outline" className={dashboardOutlineButton} onClick={() => setEditing(tuition)}>Edit</Button>
                 <Button
                   size="sm"
                   variant="outline"
+                  className={dashboardOutlineButton}
                   onClick={() =>
                     patch(tuition._id, { status: tuition.status === "active" ? "closed" : "active" }, "Status updated.")
                   }
                 >
                   {tuition.status === "active" ? "Close" : "Reopen"}
                 </Button>
-                <Button size="sm" variant="outline" className="text-red-600" onClick={() => remove(tuition._id)}>
+                <Button size="sm" variant="outline" className={dashboardDestructiveButton} onClick={() => remove(tuition._id)}>
                   Delete
                 </Button>
               </div>
@@ -76,7 +83,7 @@ export default function MyTuitions() {
       />
 
       <Dialog open={!!editing} onOpenChange={(open) => !open && setEditing(null)}>
-        <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
+        <DialogContent className="max-h-[90vh] overflow-y-auto border-[#e3e5f5] bg-white text-[#101535] dark:border-[#e3e5f5] dark:bg-white dark:text-[#101535] sm:max-w-2xl">
           <DialogHeader>
             <DialogTitle>Edit tuition</DialogTitle>
           </DialogHeader>

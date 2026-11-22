@@ -3,7 +3,13 @@
 import { Button } from "@/components/ui/button";
 import { api, runAction } from "@/app/lib/api";
 import { useApi } from "@/app/lib/use-api";
-import { PageHeader, SimpleTable, StatusBadge } from "../../ui";
+import {
+  dashboardOutlineButton,
+  dashboardPrimaryButton,
+  PageHeader,
+  SimpleTable,
+  StatusBadge,
+} from "../../ui";
 import { Tuition } from "@/components/type";
 
 
@@ -44,7 +50,7 @@ export default function AdminTuitions() {
               <div className="flex gap-2">
                 <Button
                   size="sm"
-                  className="bg-[#1e2a78] text-white"
+                  className={dashboardPrimaryButton}
                   disabled={tuition.approvalStatus === "approved"}
                   onClick={() => decide(tuition._id, "approved")}
                 >
@@ -53,6 +59,7 @@ export default function AdminTuitions() {
                 <Button
                   size="sm"
                   variant="outline"
+                  className={dashboardOutlineButton}
                   disabled={tuition.approvalStatus === "rejected"}
                   onClick={() => decide(tuition._id, "rejected")}
                 >

@@ -6,7 +6,12 @@ import { api, runAction } from "@/app/lib/api";
 import { useApi } from "@/app/lib/use-api";
 import { Tuition } from "@/components/type";
 import { Button } from "@/components/ui/button";
-import { PageHeader, StatusBadge } from "../../ui";
+import {
+  dashboardOutlineButton,
+  dashboardPrimaryButton,
+  PageHeader,
+  StatusBadge,
+} from "../../ui";
 
 type BookmarkList = {
   bookmarks: Tuition[];
@@ -62,7 +67,7 @@ export default function StudentBookmarksPage() {
           <Button
             type="button"
             variant="outline"
-            className="mt-3"
+            className={`mt-3 ${dashboardOutlineButton}`}
             onClick={reload}
           >
             Try again
@@ -75,7 +80,7 @@ export default function StudentBookmarksPage() {
           {Array.from({ length: 3 }).map((_, index) => (
             <div
               key={index}
-              className="h-48 animate-pulse rounded-2xl bg-gray-200"
+              className="h-48 animate-pulse rounded-2xl bg-[#e6eafc]"
             />
           ))}
         </div>
@@ -125,7 +130,7 @@ export default function StudentBookmarksPage() {
                     <Button
                       nativeButton={false}
                       render={<Link href={`/tuitions/${tuition._id}`} />}
-                      className="bg-[#1e2a78] text-white hover:bg-[#161f5c]"
+                      className={dashboardPrimaryButton}
                     >
                       View tuition
                     </Button>
@@ -137,6 +142,7 @@ export default function StudentBookmarksPage() {
                   <Button
                     type="button"
                     variant="outline"
+                    className={dashboardOutlineButton}
                     onClick={() => removeBookmark(tuition._id)}
                   >
                     <Trash2 size={16} aria-hidden="true" />
@@ -148,7 +154,7 @@ export default function StudentBookmarksPage() {
           })}
         </div>
       ) : (
-        <div className="rounded-2xl border border-dashed border-gray-300 bg-white px-6 py-12 text-center">
+        <div className="rounded-2xl border border-dashed border-[#e3e5f5] bg-white px-6 py-12 text-center dark:bg-white">
           <Bookmark
             size={28}
             className="mx-auto text-[#1e2a78]"
@@ -163,7 +169,7 @@ export default function StudentBookmarksPage() {
           <Button
             nativeButton={false}
             render={<Link href="/tuitions" />}
-            className="mt-5 bg-[#1e2a78] text-white hover:bg-[#161f5c]"
+            className={`mt-5 ${dashboardPrimaryButton}`}
           >
             Browse tuitions
           </Button>

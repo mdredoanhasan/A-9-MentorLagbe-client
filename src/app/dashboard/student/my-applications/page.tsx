@@ -4,7 +4,12 @@ import { Button } from "@/components/ui/button";
 import { api, runAction } from "@/app/lib/api";
 import { useApi } from "@/app/lib/use-api";
 import { Application } from "@/components/type";
-import { PageHeader, SimpleTable, StatusBadge } from "../../ui";
+import {
+  dashboardDestructiveButton,
+  PageHeader,
+  SimpleTable,
+  StatusBadge,
+} from "../../ui";
 
 
 export default function MyApplications() {
@@ -40,7 +45,7 @@ export default function MyApplications() {
             header: "",
             cell: (application) =>
               application.status === "pending" && (
-                <Button size="sm" variant="outline" className="text-red-600" onClick={() => cancel(application._id)}>
+                <Button size="sm" variant="outline" className={dashboardDestructiveButton} onClick={() => cancel(application._id)}>
                   Cancel
                 </Button>
               ),
