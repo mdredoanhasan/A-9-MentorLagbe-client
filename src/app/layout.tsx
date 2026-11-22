@@ -6,6 +6,7 @@ import Footer from "./components/footer";
 import SiteChrome from "./components/site-chrome";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
   title: "MentorLagbe",
@@ -21,12 +22,18 @@ const fraunces = Fraunces({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable, fraunces.variable)}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn("font-sans", geist.variable, fraunces.variable)}
+    >
       <body>
-        <SiteChrome navbar={<Navbar />} footer={<Footer />}>
-          {children}
-        </SiteChrome>
-        <Toaster />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <SiteChrome navbar={<Navbar />} footer={<Footer />}>
+            {children}
+          </SiteChrome>
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );

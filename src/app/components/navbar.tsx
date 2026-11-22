@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ChevronDown, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import { authClient, useSession } from "@/app/lib/auth-client";
 import { normalizeUserRole } from "@/components/type";
 import { toast } from "sonner";
@@ -28,8 +29,14 @@ export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const { data: session, isPending } = useSession();
+  const { resolvedTheme, setTheme } = useTheme();
+  const [themeMounted, setThemeMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
+
+  useEffect(() => {
+    setThemeMounted(true);
+  }, []);
 
   const user = session?.user;
   const initial = user?.name?.trim().charAt(0).toUpperCase() || "U";
@@ -58,7 +65,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-gray-200 bg-[#faf8f4] backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-gray-200 bg-[#faf8f4] backdrop-blur dark:border-white/10 dark:bg-slate-950/95">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-2.5">
         <Link href="/" className="font-serif text-2xl font-bold">
           <span className="text-[#1e2a78]">Mentor</span>
@@ -84,6 +91,20 @@ export default function Navbar() {
         </ul>
 
         <div className="flex min-w-48 items-center justify-end gap-3">
+          <button
+            type="button"
+            aria-label={resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            title={resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
+            onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+            className="flex size-10 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-700 transition-colors hover:border-[#1e2a78] hover:text-[#1e2a78] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e2a78] focus-visible:ring-offset-2 dark:border-white/15 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-white/40"
+          >
+            {themeMounted && resolvedTheme === "dark" ? (
+              <Sun size={18} aria-hidden="true" />
+            ) : (
+              <Moon size={18} aria-hidden="true" />
+            )}
+          </button>
+
           {user ? (
             <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
               <DropdownMenuTrigger asChild>
