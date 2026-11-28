@@ -9,15 +9,23 @@ if (!mongoUri) {
   throw new Error("MONGODB_URI is not set in .env");
 }
 
-// Dev-e hot reload hole bar bar notun connection na khule
+// Shob environment e (dev + production) ek-i client reuse hobe
 const g = globalThis as unknown as { mongoClient?: MongoClient };
-const client = g.mongoClient ?? new MongoClient(mongoUri);
-if (process.env.NODE_ENV !== "production") g.mongoClient = client;
+
+if (!g.mongoClient) {
+  g.mongoClient = new MongoClient(mongoUri, {
+    maxPoolSize: 10,
+    serverSelectionTimeoutMS: 10000,
+  });
+}
+
+const client = g.mongoClient;
 
 export const database = client.db("Mentor-lagbe");
 
 export const auth = betterAuth({
-  database: mongodbAdapter(database),
+  // client pass kora hocche jate adapter er sathe same client use hoy
+  database: mongodbAdapter(database, { client }),
   baseURL: process.env.BETTER_AUTH_URL,
   // Local ar Vercel preview URL-eo login kaj korar jonno
   trustedOrigins: ["http://localhost:3000", "https://*.vercel.app"],
@@ -31,13 +39,13 @@ export const auth = betterAuth({
         type: "string",
         required: true,
         defaultValue: "student",
-        input: true, // sign-up form role pathate pare
+        input: true,
       },
       plan: {
         type: "string",
         required: false,
         defaultValue: "free",
-        input: false, // user nijer plan change korte parbe na
+        input: false,
       },
       phone: { type: "string", required: false, input: true },
       bio: { type: "string", required: false, input: true },
@@ -46,13 +54,11 @@ export const auth = betterAuth({
   databaseHooks: {
     user: {
       create: {
-        // Sign up-e shudhu student ba tutor, onno kichu hole student
         before: async (user) => ({
           data: { ...user, role: user.role === "tutor" ? "tutor" : "student" },
         }),
       },
       update: {
-        // Profile update diye role ba plan bodlano jabe na
         before: async (data) => {
           if ("role" in data || "plan" in data) {
             throw new APIError("BAD_REQUEST", {
